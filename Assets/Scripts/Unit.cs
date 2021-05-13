@@ -6,9 +6,10 @@ public class Unit : MonoBehaviour {
     [SerializeField] protected int maxHealth;
     protected int currentHealth;
     [SerializeField] protected float speed;
+    [SerializeField] protected float jumpForce;
     protected SpriteRenderer sprite;
     protected Animator animator;
-    protected Rigidbody2D rigidbody;
+    protected new Rigidbody2D rigidbody;
 
     public virtual void TakeDamage(float damege)
     {
