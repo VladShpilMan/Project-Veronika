@@ -16,7 +16,7 @@ public class Character : Unit
 
 
 
-    private void Awake() {
+    protected void Awake() {
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;

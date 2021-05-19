@@ -11,11 +11,11 @@ public class Unit : MonoBehaviour {
     protected Animator animator;
     protected new Rigidbody2D rigidbody;
 
-    public virtual void TakeDamage(float damege)
-    {
-        Die();
-    }
+    //public virtual void TakeDamage(float damege)
+    //{
+    //    Die();
+    //}
 
-    protected virtual void Die() { }
+    //protected virtual void Die() { }
     
 }
