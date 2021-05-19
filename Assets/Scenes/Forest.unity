@@ -2226,11 +2226,11 @@ MonoBehaviour:
   maxHealth: 0
   speed: 0.03
   jumpForce: 0
-  stoppingDistance: 0
   speedAnim: 2
   attackRate: 2
   point: {fileID: 1671585112}
   positionOfPatrol: 2
+  stoppingDistance: 3
 --- !u!1 &1022207385
 GameObject:
   m_ObjectHideFlags: 0

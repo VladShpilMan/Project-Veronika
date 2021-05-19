@@ -10,8 +10,6 @@ public class Enemy : Unit {
     protected bool goBack = false;
     protected Transform character;
 
-    [SerializeField] protected float stoppingDistance;
-
     [SerializeField] protected float speedAnim = 2F;//
     [SerializeField] protected float attackRate = 2F;//
     protected float nextAttackTime = 0F;//
