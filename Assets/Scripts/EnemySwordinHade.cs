@@ -10,7 +10,12 @@ public class EnemySwordinHade : Enemy {
 
     void FixedUpdate()
     {
-        if(Vector2.Distance(transform.position, point.position) < positionOfPatrol && angry == false) chill = true;
+        if (Vector2.Distance(transform.position, point.position) < positionOfPatrol && angry == false)
+        {
+            chill = true;
+            angry = false;
+            goBack = false;
+        }
 
         if (Vector2.Distance(transform.position, character.position) < stoppingDistance)
         {
@@ -19,19 +24,21 @@ public class EnemySwordinHade : Enemy {
             goBack = false;
         }
 
-        //if (Vector2.Distance(transform.position, character.position) > stoppingDistance)
-        //{
-        //    angry = false;
-        //    goBack = true;
-        //}
+        if (Vector2.Distance(transform.position, character.position) > stoppingDistance && chill == false)
+        {
+            angry = false;
+            goBack = true;
+            chill = false;
+        }
 
         if (chill) Chill();
         if (angry) Angry();
-        //if (goBack) GoBack();
+        if (goBack) GoBack();
     }
 
     void Chill()
     {
+        speedAtMoment = (float)speed / 100;
         if (transform.position.x > point.position.x + positionOfPatrol)
         {
             movingRight = false;
@@ -44,12 +51,12 @@ public class EnemySwordinHade : Enemy {
         if (movingRight)
         {
             sprite.flipX = false;
-            transform.Translate(speedAtMoment, 0, 0);
+            transform.position = new Vector2(transform.position.x + speedAtMoment, transform.position.y);
         }
         else
         {
             sprite.flipX = true;
-            transform.Translate(-speedAtMoment, 0, 0);
+            transform.position = new Vector2(transform.position.x - speedAtMoment, transform.position.y);
         }
     }
 
@@ -70,32 +77,22 @@ public class EnemySwordinHade : Enemy {
             { //flip the sprite horizontally
                 sprite.flipX = false;
             }
-
-
-// the gameObject increases its speed in case of aggression
-
-            if (movingRight)
-            {
-                transform.Translate(speedAtMoment, 0, 0);
-            }
-            else
-            {
-                transform.Translate(-speedAtMoment, 0, 0);
-            }
-        }
+            speedAtMoment = ((float)speed / 100) + 0.02f;
+            transform.position = Vector2.MoveTowards(transform.position, character.position, speedAtMoment);
+        }          
     }
 
     void GoBack()
     {
-        if(point.position.x - transform.position.x > 0)
+        if (point.position.x - transform.position.x > 0)
         {
             sprite.flipX = false;
-            transform.Translate(speedAtMoment, 0, 0);
         }
         else
         {
             sprite.flipX = true;
-            transform.Translate(-speedAtMoment, 0, 0);
         }
+        speedAtMoment = ((float)speed / 100) + 0.02f;
+        transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
     }
 }

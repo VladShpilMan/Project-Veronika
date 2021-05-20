@@ -10,16 +10,16 @@ public class Enemy : Unit {
     protected bool goBack = false;
     protected Transform character;
 
-    [SerializeField] protected float speedAnim = 2F;//
-    [SerializeField] protected float attackRate = 2F;//
-    protected float nextAttackTime = 0F;//
+    [SerializeField] protected float speedAnim;
+    [SerializeField] protected float attackRate;
+    protected float nextAttackTime;
     protected float speedAtMoment;
 
    
 
     public virtual void Start()
     {
-        speedAtMoment = (float)speed;
+        speedAtMoment = (float)speed / 100;
         rigidbody = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         sprite = GetComponentInChildren<SpriteRenderer>();

@@ -2224,7 +2224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
-  speed: 0.03
+  speed: 3
   jumpForce: 0
   speedAnim: 2
   attackRate: 2
