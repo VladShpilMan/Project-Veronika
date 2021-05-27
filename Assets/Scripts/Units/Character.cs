@@ -8,7 +8,7 @@ public class Character : Unit
     private float speedX;
     private new Collider2D collider;
 
-
+    private bool mode = true;
     private bool isGround;
     public Transform groundCheck;
     public float checkRadius;
@@ -31,10 +31,13 @@ public class Character : Unit
 
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         Run();
+
+        
     }
 
     private void Update() {
         Jump();
+        BattleMode();
     }
 
     private void Run() {
@@ -58,5 +61,23 @@ public class Character : Unit
         {
             rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+    }
+
+    void BattleMode()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+            if (mode)
+            {
+                animator.SetBool("isBattleMode", mode);
+                animator.SetFloat("speed", 1.0f);
+                mode = !mode;
+            }
+            else
+            {
+                animator.SetBool("isBattleMode", mode);
+                animator.SetFloat("speed", -1.0f);
+                mode = !mode;
+            }
+        
     }
 }
