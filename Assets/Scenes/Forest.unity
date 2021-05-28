@@ -297,6 +297,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 279374771541bfe48bbcc018bebcd087, type: 3}
+--- !u!4 &86932361 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 131905080451577284, guid: 434200c0a9bd17543abf351dfefee88d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1012211853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &135112807
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,6 +6077,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &594055567 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 131905079599341935, guid: 434200c0a9bd17543abf351dfefee88d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1012211853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &602637069
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,6 +6335,22 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &659771018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659771012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acfb9f5c6d549849a369c3385e973f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPointRight: {fileID: 86932361}
+  attackPointLeft: {fileID: 594055567}
+  attackRangeRight: 0.4
+  attackRangeLeft: 0.4
 --- !u!1 &699842702
 GameObject:
   m_ObjectHideFlags: 0
@@ -7073,6 +7101,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131905079599341935, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.463
+      objectReference: {fileID: 0}
+    - target: {fileID: 131905079599341935, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 131905080451577284, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.457
+      objectReference: {fileID: 0}
+    - target: {fileID: 131905080451577284, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
     - target: {fileID: 131905081136000730, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_Offset.y
@@ -7102,6 +7150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
