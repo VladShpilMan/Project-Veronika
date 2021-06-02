@@ -26,25 +26,19 @@ public class Enemy : Unit {
         character = GameObject.FindGameObjectWithTag("Character").transform;
     }
 
-    //public virtual void TakeDamage(int damage)
-    //{
-    //    currentHealth -= damage;
-    //    //animator.SetTrigger("Hurt"); // play animation of taking damage
-    //    //animator.SetFloat("speedAnimHurt", speedAnimHurt);
+    public virtual void TakeDamage(int damage) { }
 
-    //    if (currentHealth <= 0)
-    //    {
-    //        Die();
-    //    }
-    //}
-
+    protected void Die()
+    {
+        Debug.Log("Die");
+    }
     //public virtual void Die()
     //{
-    //    //animator.SetBool("isDead", true); // play animation of death
-
-    //    GetComponent<CapsuleCollider2D>().enabled = false;
-    //    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // set the physical parameter to static, so that the gameObject does not fall into the ground
-    //    this.enabled = false; // disable script for gameObject
-    //    //this.GetComponent<EnemyAttack>().enabled = false;
+    //animator.SetBool("isDead", true); // play animation of death
+    //Debug.Log("Die");
+    //GetComponent<CapsuleCollider2D>().enabled = false;
+    //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // set the physical parameter to static, so that the gameObject does not fall into the ground
+    //this.enabled = false; // disable script for gameObject
+    //this.GetComponent<EnemyAttack>().enabled = false;
     //}
 }

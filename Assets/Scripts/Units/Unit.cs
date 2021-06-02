@@ -11,9 +11,11 @@ public class Unit : MonoBehaviour {
     protected Animator animator;
     protected new Rigidbody2D rigidbody;
 
-    //public virtual void TakeDamage(float damege)
-    //{
-    //    Die();
+    //public virtual void TakeDamage(float damege) {
+    //    currentHealth -= damege;
+
+    //    if (currentHealth <= 0)
+    //        Debug.Log("Die");
     //}
 
     //protected virtual void Die() { }

@@ -95,4 +95,20 @@ public class EnemySwordinHade : Enemy {
         speedAtMoment = ((float)speed / 100) + 0.02f;
         transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
     }
+
+    //public void TakeDamage(int damege)
+    //{
+    //   currentHealth -= damege;
+
+    //    if (currentHealth <= 0)
+    //        Debug.Log("Die");
+    //}
+
+    public override void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Hit");
+        if (currentHealth <= 0)
+            Die();
+    }
 }

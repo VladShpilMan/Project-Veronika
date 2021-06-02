@@ -4,49 +4,69 @@ using UnityEngine;
 
 public class AttackCharacter : MonoBehaviour
 {
+    private bool isCombatMode = false;
     private Animator animator;
     private float nextAttackTime = 0F;
-    private float attackRate = 2.5f;
+    private float attackRate = 3f;
+    [SerializeField] private int attackDamage;
 
-    [SerializeField]private Transform attackPointRight;
-    [SerializeField]private Transform attackPointLeft;
-    [SerializeField]private float attackRangeRight;
-    [SerializeField]private float attackRangeLeft;
+    [SerializeField]private Transform attackPoint;
+    [SerializeField]private float attackRange;
+    [SerializeField] private LayerMask enemyLayer;
+    private SpriteRenderer sprite;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-    void Update()
+    private void Update() {
+        animator.SetBool("isAttack", false);
+
+        EnteringCombatMode();
+        Attack();
+        FlipGizmos();
+    }
+
+
+    private void EnteringCombatMode() {
+        if (Input.GetKeyDown(KeyCode.E)) isCombatMode = !isCombatMode;
+    }
+
+    private void FlipGizmos()
     {
-        animator.SetBool("Attack", false);
+        if (sprite.flipX) attackPoint.transform.localPosition = new Vector3(-0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
+            else
+                attackPoint.transform.localPosition = new Vector3(0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
+    }
+
+    private void Attack() {
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetButtonDown("Fire1") && isCombatMode)
             {
-                Attack();
+                animator.SetBool("isAttack", true);
+
+                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+                foreach(Collider2D enemy in hitEnemies)
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
+
                 nextAttackTime = Time.time + 1F / attackRate;
             }
         }
     }
 
-    void Attack()
-    {
-        animator.SetBool("Attack", true);
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRangeRight);
-
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (attackPointRight == null)
+    private void OnDrawGizmosSelected() {
+        if (attackPoint == null)
             return;
-        if (attackPointLeft == null)
-            return;
+       // if (attackPointLeft == null)
+       //    return;
 
-        Gizmos.DrawWireSphere(attackPointRight.position, attackRangeRight);
-        Gizmos.DrawWireSphere(attackPointLeft.position, attackRangeLeft);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+       // Gizmos.DrawWireSphere(attackPointLeft.position, attackRangeLeft);
     }
 }
