@@ -17,11 +17,16 @@ public class Enemy : Unit {
 
    
 
-    public virtual void Start()
-    {
+    protected virtual void Start() {
+        GetReferences();
+
         speedAtMoment = (float)speed / 100;
-        rigidbody = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+    }
+
+    protected virtual void GetReferences() {
+        animator = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         character = GameObject.FindGameObjectWithTag("Character").transform;
     }
@@ -31,14 +36,10 @@ public class Enemy : Unit {
     protected void Die()
     {
         Debug.Log("Die");
+        animator.SetTrigger("IsDie");
+        animator.SetBool("isDie", true);
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        this.enabled = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
-    //public virtual void Die()
-    //{
-    //animator.SetBool("isDead", true); // play animation of death
-    //Debug.Log("Die");
-    //GetComponent<CapsuleCollider2D>().enabled = false;
-    //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // set the physical parameter to static, so that the gameObject does not fall into the ground
-    //this.enabled = false; // disable script for gameObject
-    //this.GetComponent<EnemyAttack>().enabled = false;
-    //}
 }

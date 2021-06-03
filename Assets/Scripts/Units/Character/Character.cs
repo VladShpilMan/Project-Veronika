@@ -9,30 +9,34 @@ public class Character : Unit
     private new Collider2D collider;
 
     private bool mode = true;
-    private bool isGround;
-    public Transform groundCheck;
-    public float checkRadius;
-    public LayerMask whatIsGround;
+    [HideInInspector] public bool isGround, isMove;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float checkRadius;
+    [SerializeField] private LayerMask whatIsGround;
 
 
 
     protected void Awake() {
+        GetReferences();
+
+        currentHealth = maxHealth;
+        speedX = speed / 100;
+    }
+
+    private void GetReferences() {
+        collider = GetComponentInChildren<Collider2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        currentHealth = maxHealth;
-        rigidbody = GetComponent<Rigidbody2D>();
-        speedX = speed / 100;
-        collider = GetComponentInChildren<Collider2D>();
     }
 
     private void FixedUpdate() {
         animator.SetBool("inMove", false);
         animator.SetBool("isGround", isGround);
+        isMove = false;
 
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-        Run();
-
-        
+        Run();      
     }
 
     private void Update() {
@@ -40,8 +44,9 @@ public class Character : Unit
         BattleMode();
     }
 
-    private void Run() {
 
+    private void Run() {
+        isMove = true;
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
             sprite.flipX = false;

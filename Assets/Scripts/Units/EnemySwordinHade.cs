@@ -7,6 +7,7 @@ public class EnemySwordinHade : Enemy {
     [SerializeField] private Transform point;
     [SerializeField] private int positionOfPatrol;
     [SerializeField] protected float stoppingDistance;
+    [SerializeField] private float expectation;
 
     void FixedUpdate()
     {
@@ -38,6 +39,7 @@ public class EnemySwordinHade : Enemy {
 
     void Chill()
     {
+        animator.SetBool("inMove", true);
         speedAtMoment = (float)speed / 100;
         if (transform.position.x > point.position.x + positionOfPatrol)
         {
@@ -58,32 +60,45 @@ public class EnemySwordinHade : Enemy {
             sprite.flipX = true;
             transform.position = new Vector2(transform.position.x - speedAtMoment, transform.position.y);
         }
+
     }
+
 
     void Angry()
     {
+        
         double chek = transform.position.x - character.position.x;
         if (chek < 0) chek *= -1;
-
+        FlipX();
         // the gameObject approaches the MainCharacter if the distance between them is greater than the parameter
         if (chek >= 1.2)
         {
-            if (transform.position.x - character.position.x > 0 && movingRight == true)
-            {  // flip the sprite horizontally
-                sprite.flipX = true;
-            }
+            //if (transform.position.x - character.position.x > 0 && movingRight == true)
+            //{  // flip the sprite horizontally
+            //    sprite.flipX = true;
+            //}
 
-            if (transform.position.x - character.position.x < 0 && movingRight == false)
-            { //flip the sprite horizontally
-                sprite.flipX = false;
-            }
+            //if (transform.position.x - character.position.x < 0 && movingRight == false)
+            //{ //flip the sprite horizontally
+            //    sprite.flipX = false;
+            //}
             speedAtMoment = ((float)speed / 100) + 0.02f;
             transform.position = Vector2.MoveTowards(transform.position, character.position, speedAtMoment);
-        }          
+            animator.SetBool("inMove", true);
+        }     
+        
+        if(chek < 1.2)
+            animator.SetBool("inMove", false);
+    }
+
+    private void FlipX() {
+        if(character.transform.position.x > transform.position.x) sprite.flipX = false;
+            else sprite.flipX = true;
     }
 
     void GoBack()
     {
+        animator.SetBool("inMove", true);
         if (point.position.x - transform.position.x > 0)
         {
             sprite.flipX = false;
@@ -104,10 +119,11 @@ public class EnemySwordinHade : Enemy {
     //        Debug.Log("Die");
     //}
 
-    public override void TakeDamage(int damage)
-    {
+    public override void TakeDamage(int damage) {
         currentHealth -= damage;
         Debug.Log("Hit");
+        animator.SetTrigger("Hit");
+        animator.SetBool("isDie", false);
         if (currentHealth <= 0)
             Die();
     }
