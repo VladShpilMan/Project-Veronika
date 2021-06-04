@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : Unit
-{
+public class Character : Unit {
 
+    public bool isGround, isMove;
     private float speedX;
     private new Collider2D collider;
 
-    private bool mode = true;
-    [HideInInspector] public bool isGround, isMove;
+    private bool isMode = true;
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float checkRadius;
     [SerializeField] private LayerMask whatIsGround;
 
-
+    public bool IsGround { get { return isGround; } }
+    public bool IsMove { get { return isMove; } }
 
     protected void Awake() {
         GetReferences();
@@ -71,18 +72,33 @@ public class Character : Unit
     void BattleMode()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            if (mode)
+            if (isMode)
             {
-                animator.SetBool("isBattleMode", mode);
+                animator.SetBool("isBattleMode", isMode);
                 animator.SetFloat("speed", 1.0f);
-                mode = !mode;
+                isMode = !isMode;
             }
             else
             {
-                animator.SetBool("isBattleMode", mode);
+                animator.SetBool("isBattleMode", isMode);
                 animator.SetFloat("speed", -1.0f);
-                mode = !mode;
-            }
-        
+                isMode = !isMode;
+            }        
+    }
+
+    public void TakeDamage(int damage) {
+
+        currentHealth -= damage;
+        Debug.Log("Hit");
+        if (currentHealth > 0) {
+            animator.SetTrigger("Hit");
+            animator.SetBool("isDie", false);
+        }
+        else Die();
+    }
+
+    private void Die() {
+        animator.SetBool("isDie", true);
+        animator.SetTrigger("Hit");
     }
 }

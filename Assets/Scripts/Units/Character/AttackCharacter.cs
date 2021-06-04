@@ -15,7 +15,7 @@ public class AttackCharacter : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     private SpriteRenderer sprite;
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -63,10 +63,7 @@ public class AttackCharacter : MonoBehaviour
     private void OnDrawGizmosSelected() {
         if (attackPoint == null)
             return;
-       // if (attackPointLeft == null)
-       //    return;
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-       // Gizmos.DrawWireSphere(attackPointLeft.position, attackRangeLeft);
     }
 }

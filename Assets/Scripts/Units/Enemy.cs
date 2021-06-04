@@ -36,10 +36,10 @@ public class Enemy : Unit {
     protected void Die()
     {
         Debug.Log("Die");
-        animator.SetTrigger("IsDie");
         animator.SetBool("isDie", true);
         GetComponent<CapsuleCollider2D>().enabled = false;
         this.enabled = false;
+        GetComponent<EnemyAttack>().enabled = false;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 }

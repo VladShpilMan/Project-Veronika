@@ -6478,7 +6478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124cd67940596064e85b29e4d755ec19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 3
   speed: 5
   jumpForce: 4.5
   isGround: 0
@@ -6506,6 +6506,18 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &659771019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659771012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f87f32aab4ab241a28ed708209cb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &699842702
 GameObject:
   m_ObjectHideFlags: 0
@@ -6877,6 +6889,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.18, y: 1.31}
   m_EdgeRadius: 0
+--- !u!4 &807501170 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7607596788348329279, guid: e1999c61eabbabb4c94c7679f0de64d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1193599394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &851553948
 GameObject:
   m_ObjectHideFlags: 0
@@ -7461,18 +7479,18 @@ PrefabInstance:
     - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.76
+      value: 1.5625
       objectReference: {fileID: 0}
     - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.84
+      value: 1.5625
       objectReference: {fileID: 0}
     - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2026418691981081205, guid: 971dabb4ebe11f64b89e925f464f3388,
+      objectReference: {fileID: 21300000, guid: be64051f627a7264890e21e50525ef93,
         type: 3}
     - target: {fileID: 2564055570146383629, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
@@ -7584,7 +7602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  speed: 2
+  speed: 0
   jumpForce: 0
   speedAnim: 2
   attackRate: 2
@@ -7592,6 +7610,24 @@ MonoBehaviour:
   positionOfPatrol: 2
   stoppingDistance: 3
   expectation: 2
+--- !u!114 &1018965669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018965663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4cf10edcd505e942a33014aa648fc28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 1
+  attackPoint: {fileID: 807501170}
+  attackRange: 0.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1022207385
 GameObject:
   m_ObjectHideFlags: 0
@@ -12586,13 +12622,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7607596788348329278, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
+      propertyPath: m_Name
+      value: AttackPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607596788348329278, guid: e1999c61eabbabb4c94c7679f0de64d0,
+        type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607596788348329279, guid: e1999c61eabbabb4c94c7679f0de64d0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.469
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607596788348329279, guid: e1999c61eabbabb4c94c7679f0de64d0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.341
       objectReference: {fileID: 0}
     - target: {fileID: 7607596788412589397, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
       propertyPath: m_Name
-      value: EnemySwordinHade
+      value: BanditSwordinHade
       objectReference: {fileID: 0}
     - target: {fileID: 7607596788412589397, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
@@ -12603,6 +12654,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607596788412589397, guid: e1999c61eabbabb4c94c7679f0de64d0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7607596788412589400, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
