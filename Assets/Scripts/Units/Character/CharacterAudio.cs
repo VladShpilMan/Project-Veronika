@@ -6,24 +6,24 @@ public class CharacterAudio : MonoBehaviour
 {
     private AudioSource clip;
 
-    private Character getIsMove;
-    private bool isMove;
+    private bool setIsMove, setIsGround;
 
-    private void Start()
+    private void Awake()
     {
-        //clip = GetComponentInChildren<AudioSource>();
-        //Debug.Log(getIsMove.IsMove);
+        clip = GetComponentInChildren<AudioSource>();       
     }
 
-    private void FixedUpdate()
-    {
-        AudioManager();
-        //isMove = getIsMove.IsMove;
-        //Debug.Log(getIsMove.IsMove);
+    private void Update() {
+
+        StepManager();
     }
 
-    private void AudioManager()
-    {
+    private void StepManager() {
+        setIsMove = Character.IsMove;
+        setIsGround = Character.IsGround;
+ 
+        if (setIsMove && setIsGround) clip.mute = false;
+            else clip.mute = true;
 
     }
 }
