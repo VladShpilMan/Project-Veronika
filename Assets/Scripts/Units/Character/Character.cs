@@ -20,6 +20,7 @@ public class Character : Unit {
     private FootstepsCharacter foot;
     private string tagName;
     public float jumpDistance = 10f;
+    
 
     protected void Awake() {
         GetReferences();
@@ -40,12 +41,7 @@ public class Character : Unit {
         animator.SetBool("inMove", false);
         animator.SetBool("isGround", isGround);
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-        Collider2D[] coll = Physics2D.OverlapCircleAll(groundCheck.position, checkRadius, whatIsGround);
-
-        foreach (Collider2D col in coll) {
-            if (col.gameObject.tag == "Leaves")
-                tagName = col.gameObject.tag;
-        }
+      
         Run();
     }
 
@@ -54,6 +50,13 @@ public class Character : Unit {
         BattleMode();
        
         GetStep();
+        Collider2D[] coll = Physics2D.OverlapCircleAll(groundCheck.position, checkRadius, whatIsGround);
+
+        foreach (Collider2D col in coll)
+        {
+            if (col.gameObject.layer == 8)
+                tagName = col.gameObject.tag;
+        }
     }
 
 
@@ -121,9 +124,11 @@ public class Character : Unit {
         {
             case "Leaves":
                 foot.PlayStep(FootstepsCharacter.StepsOn.Leaves, 1);
+                Debug.Log("steps on leaves");
                 break;
             case "Wood":
                 foot.PlayStep(FootstepsCharacter.StepsOn.Wood, 1);
+                Debug.Log("steps on tree");
                 break;
         }
     }

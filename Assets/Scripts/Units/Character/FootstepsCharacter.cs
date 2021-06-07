@@ -11,21 +11,16 @@ public class FootstepsCharacter : MonoBehaviour {
 	private string mainFolder = "Footsteps", leavesFolder = "Leaves", woodFolder = "Wood";
 	private AudioClip[] Leaves, Wood;
 	private AudioSource source;
-	private AudioClip clip;
+	private AudioClip clip, nextClip;
 
 	void Start() {
 		source = GetComponent<AudioSource>();
 		source.playOnAwake = false;
 		source.mute = false;
-		source.loop = false;
+		source.loop = true;
 		
 
 		LoadSounds();
-	}
-
-	private void Update()
-    {
-		Debug.Log(Resources.LoadAll<AudioClip>(mainFolder + "/" + leavesFolder));
 		
 	}
 
@@ -35,16 +30,21 @@ public class FootstepsCharacter : MonoBehaviour {
 	}
 
 	public void PlayStep(StepsOn stepsOn, float volume) {
-		switch (stepsOn) {
-			case StepsOn.Leaves:
-				clip = Leaves[1];
-				break;
-			case StepsOn.Wood:
-				clip = Wood[Random.Range(0, Wood.Length)];
-				break;
-		}
+        switch (stepsOn)
+        {
+            case StepsOn.Leaves:
+                clip = Leaves[0];
+                break;
+            case StepsOn.Wood:
+                clip = Wood[0];
+                break;
+        }
 
-		if(clip != null)
+		//Debug.Log(nextClip == clip);
+		if (!source.isPlaying || clip != nextClip)
+		{
 			source.PlayOneShot(clip, volume);
+			nextClip = clip;
+		}
 	}
 }
