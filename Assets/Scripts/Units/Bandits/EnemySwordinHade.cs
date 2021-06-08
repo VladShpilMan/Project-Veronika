@@ -9,8 +9,15 @@ public class EnemySwordinHade : Enemy {
     [SerializeField] protected float stoppingDistance;
     [SerializeField] private float expectation;
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
+        EnemyLogic();
+
+        if (chill) Chill();
+        if (angry) Angry();
+        if (goBack) GoBack();
+    }
+
+    private void EnemyLogic() {
         if (Vector2.Distance(transform.position, point.position) < positionOfPatrol && angry == false)
         {
             chill = true;
@@ -31,14 +38,9 @@ public class EnemySwordinHade : Enemy {
             goBack = true;
             chill = false;
         }
-
-        if (chill) Chill();
-        if (angry) Angry();
-        if (goBack) GoBack();
     }
 
-    void Chill()
-    {
+    void Chill() {
         animator.SetBool("inMove", true);
         speedAtMoment = (float)speed / 100;
         if (transform.position.x > point.position.x + positionOfPatrol)
@@ -73,15 +75,6 @@ public class EnemySwordinHade : Enemy {
         // the gameObject approaches the MainCharacter if the distance between them is greater than the parameter
         if (chek >= 1.2)
         {
-            //if (transform.position.x - character.position.x > 0 && movingRight == true)
-            //{  // flip the sprite horizontally
-            //    sprite.flipX = true;
-            //}
-
-            //if (transform.position.x - character.position.x < 0 && movingRight == false)
-            //{ //flip the sprite horizontally
-            //    sprite.flipX = false;
-            //}
             speedAtMoment = ((float)speed / 100) + 0.02f;
             transform.position = Vector2.MoveTowards(transform.position, character.position, speedAtMoment);
             animator.SetBool("inMove", true);
@@ -96,8 +89,7 @@ public class EnemySwordinHade : Enemy {
             else sprite.flipX = true;
     }
 
-    void GoBack()
-    {
+    void GoBack() {
         animator.SetBool("inMove", true);
         if (point.position.x - transform.position.x > 0)
         {
@@ -111,18 +103,12 @@ public class EnemySwordinHade : Enemy {
         transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
     }
 
-    //public void TakeDamage(int damege)
-    //{
-    //   currentHealth -= damege;
-
-    //    if (currentHealth <= 0)
-    //        Debug.Log("Die");
-    //}
 
     public override void TakeDamage(int damage) {
         currentHealth -= damage;
         animator.SetTrigger("Hit");
         animator.SetBool("isDie", false);
+
         if (currentHealth <= 0)
             Die();
     }

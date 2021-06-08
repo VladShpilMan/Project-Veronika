@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿/*
+    Base class for all units in the game
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +12,5 @@ public class Unit : MonoBehaviour {
     [SerializeField] protected float jumpForce;
     protected SpriteRenderer sprite;
     protected Animator animator;
-    protected new Rigidbody2D rigidbody;
-
-    //public virtual void TakeDamage(float damege) {
-    //    currentHealth -= damege;
-
-    //    if (currentHealth <= 0)
-    //        Debug.Log("Die");
-    //}
-
-    //protected virtual void Die() { }
-    
+    protected new Rigidbody2D rigidbody;    
 }

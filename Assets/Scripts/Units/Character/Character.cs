@@ -29,7 +29,7 @@ public class Character : Unit {
         speedX = speed / 100;
     }
 
-    private void GetReferences() {
+    private void GetReferences() { // Function for getting components
         collider = GetComponentInChildren<Collider2D>();
         rigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -43,22 +43,14 @@ public class Character : Unit {
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
       
         Run();
+        GetTag();
+        GetStep();
     }
 
     private void Update() {
         Jump();
         BattleMode();
-       
-        GetStep();
-        Collider2D[] coll = Physics2D.OverlapCircleAll(groundCheck.position, checkRadius, whatIsGround);
-
-        foreach (Collider2D col in coll)
-        {
-            if (col.gameObject.layer == 8)
-                tagName = col.gameObject.tag;
-        }
     }
-
 
     private void Run() {
         if (Input.GetAxisRaw("Horizontal") > 0)
@@ -79,21 +71,6 @@ public class Character : Unit {
         else isMove = false;
     }
 
-    private bool GetTag() // проверяем, есть ли коллайдер под ногами
-    {
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out hit, jumpDistance, whatIsGround))
-        {
-            Debug.Log("whatIsGround");
-            tagName = hit.transform.tag; // берем тег поверхности
-            return true;
-        }
-
-        tagName = string.Empty;
-        return false;
-    }
-
     private void Jump() {
         if(Input.GetButtonDown("Jump") && isGround)
         {
@@ -101,8 +78,7 @@ public class Character : Unit {
         }
     }
 
-    void BattleMode()
-    {
+    void BattleMode() { // Entering combat mode
         if (Input.GetKeyDown(KeyCode.E))
             if (isMode)
             {
@@ -118,8 +94,19 @@ public class Character : Unit {
             }        
     }
 
-    void GetStep() 
-    {
+    private void GetTag() { // Looks for the tag of the surface the player is standing on
+
+        //All colliders of objects on the ground layer are written to an array
+        Collider2D[] groundCollider = Physics2D.OverlapCircleAll(groundCheck.position, checkRadius, whatIsGround);
+
+        foreach (Collider2D col in groundCollider) 
+                tagName = col.gameObject.tag;       
+    }
+
+
+    /*Based on the accepted value of the variable "tagName", the case will be selected and specific 
+    parameters will be passed to the FootstepsCharacter class method PlayStep()*/
+    void GetStep() {
         switch (tagName)
         {
             case "Leaves":
@@ -127,7 +114,7 @@ public class Character : Unit {
                 Debug.Log("steps on leaves");
                 break;
             case "Wood":
-                foot.PlayStep(FootstepsCharacter.StepsOn.Wood, 1);
+                foot.PlayStep(FootstepsCharacter.StepsOn.Wood, 0.3f);
                 Debug.Log("steps on tree");
                 break;
         }

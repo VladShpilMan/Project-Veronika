@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿/*
+    Base class for all enemys in the game
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

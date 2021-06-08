@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackCharacter : MonoBehaviour
-{
+public class AttackCharacter : MonoBehaviour {
     private bool isCombatMode = false;
     private Animator animator;
     private float nextAttackTime = 0F;
     private float attackRate = 3f;
     [SerializeField] private int attackDamage;
 
-    [SerializeField]private Transform attackPoint;
-    [SerializeField]private float attackRange;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField]private Transform attackPoint; // This point is the center of the radius of the circle of the attack zone
+    [SerializeField]private float attackRange; //Attack radius
+    [SerializeField]private LayerMask enemyLayer;
     private SpriteRenderer sprite;
 
     private void Start()
@@ -34,13 +33,7 @@ public class AttackCharacter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) isCombatMode = !isCombatMode;
     }
 
-    private void FlipGizmos()
-    {
-        if (sprite.flipX) attackPoint.transform.localPosition = new Vector3(-0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
-            else
-                attackPoint.transform.localPosition = new Vector3(0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
-    }
-
+    //The method of attack. You can only attack once in a while.
     private void Attack() {
         if (Time.time >= nextAttackTime)
         {
@@ -60,10 +53,17 @@ public class AttackCharacter : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected() { // Draws a circle with a radius of attack for visual representation.
         if (attackPoint == null)
             return;
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    //Based on the direction in which the player moves, the "attackPoint" moves in respectively direction.
+    private void FlipGizmos() {
+        if (sprite.flipX) attackPoint.transform.localPosition = new Vector3(-0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
+        else
+            attackPoint.transform.localPosition = new Vector3(0.5f, attackPoint.transform.localPosition.y, attackPoint.transform.localPosition.z);
     }
 }
