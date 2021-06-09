@@ -17,7 +17,7 @@ public class Character : Unit {
     public static bool IsGround { get { return isGround; } }
     public static bool IsMove { get { return isMove; } }
 
-    private FootstepsCharacter foot;
+    private CharacterAudioManager foot;
     private string tagName;
     public float jumpDistance = 10f;
     
@@ -34,7 +34,7 @@ public class Character : Unit {
         rigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        foot = GetComponent<FootstepsCharacter>();
+        foot = GetComponent<CharacterAudioManager>();
     }
 
     private void FixedUpdate() {
@@ -110,12 +110,10 @@ public class Character : Unit {
         switch (tagName)
         {
             case "Leaves":
-                foot.PlayStep(FootstepsCharacter.StepsOn.Leaves, 1);
-                Debug.Log("steps on leaves");
+                foot.PlayStep(CharacterAudioManager.StepsOn.Leaves, 1);
                 break;
             case "Wood":
-                foot.PlayStep(FootstepsCharacter.StepsOn.Wood, 0.3f);
-                Debug.Log("steps on tree");
+                foot.PlayStep(CharacterAudioManager.StepsOn.Wood, 0.3f);
                 break;
         }
     }
@@ -123,7 +121,6 @@ public class Character : Unit {
     public void TakeDamage(int damage) {
 
         currentHealth -= damage;
-        Debug.Log("Hit");
         if (currentHealth > 0) {
             animator.SetTrigger("Hit");
             animator.SetBool("isDie", false);

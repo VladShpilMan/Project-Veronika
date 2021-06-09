@@ -62,7 +62,6 @@ public class EnemySwordinHade : Enemy {
             sprite.flipX = true;
             transform.position = new Vector2(transform.position.x - speedAtMoment, transform.position.y);
         }
-
     }
 
 
