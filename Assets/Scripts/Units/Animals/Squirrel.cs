@@ -14,6 +14,7 @@ public class Squirrel : Unit {
     private float nextAttackTime = 0F;
 
     private void Start() {
+        currentHealth = maxHealth;
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -64,8 +65,26 @@ public class Squirrel : Unit {
     private void Idel() {
         if (Time.time <= nextAttackTime)
         {
+            animator.SetInteger("number", Random.Range(1, 3));
             animator.SetBool("isMove", false);
         }
         else isIdle = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        //animator.SetBool("isDie", false);
+
+        if (currentHealth <= 0)
+            Die();
+    }
+    private void Die()
+    {
+        Debug.Log("Die");
+        animator.SetBool("isDie", true);
+        GetComponent<Collider2D>().enabled = false;
+        this.enabled = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 }

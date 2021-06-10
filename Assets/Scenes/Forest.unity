@@ -7508,7 +7508,8 @@ GameObject:
   - component: {fileID: 1089629686}
   - component: {fileID: 1089629685}
   - component: {fileID: 1089629688}
-  m_Layer: 0
+  - component: {fileID: 1089629689}
+  m_Layer: 11
   m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7587,7 +7588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df45fff1573142d41a7508512cb29241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 1
   speed: 0
   jumpForce: 0
   points:
@@ -7595,6 +7596,27 @@ MonoBehaviour:
   - {fileID: 137189230}
   - {fileID: 1141097432}
   - {fileID: 594294059}
+--- !u!50 &1089629689
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089629684}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1090520522
 GameObject:
   m_ObjectHideFlags: 0
@@ -13192,7 +13214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1485637564}
   - component: {fileID: 1485637565}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15388,6 +15410,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1733945859}
     m_Modifications:
+    - target: {fileID: 7651005119932302820, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 2560
+      objectReference: {fileID: 0}
     - target: {fileID: 7651005119932302822, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_RootOrder
