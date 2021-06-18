@@ -45,7 +45,7 @@ public class AttackCharacter : MonoBehaviour {
 
                 foreach(Collider2D enemy in hitEnemies)
                     {
-                        enemy.GetComponent<Squirrel>().TakeDamage(attackDamage);
+                        enemy.GetComponent<Unit>().TakeDamage(attackDamage);
                     }
 
                 nextAttackTime = Time.time + 1F / attackRate;

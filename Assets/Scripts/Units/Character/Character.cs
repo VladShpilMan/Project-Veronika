@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : Unit {
 
-    public static bool isGround, isMove;
+    public static bool isGround, isMove, isDie = false;
     private float speedX;
     private new Collider2D collider;
 
@@ -17,12 +17,14 @@ public class Character : Unit {
     public static bool IsGround { get { return isGround; } }
     public static bool IsMove { get { return isMove; } }
 
+    public static bool IsDie { get { return isDie; } }
+
     private CharacterAudioManager foot;
     private string tagName;
     public float jumpDistance = 10f;
     
 
-    protected void Awake() {
+    protected void Start() {
         GetReferences();
 
         currentHealth = maxHealth;
@@ -118,18 +120,27 @@ public class Character : Unit {
         }
     }
 
-    public void TakeDamage(int damage) {
+    public override void TakeDamage(int damage)
+    {
 
         currentHealth -= damage;
-        if (currentHealth > 0) {
+        if (currentHealth > 0)
+        {
             animator.SetTrigger("Hit");
             animator.SetBool("isDie", false);
         }
         else Die();
     }
 
-    private void Die() {
+    protected override void Die() {
+        isDie = true;
+
+        Debug.Log("Die " + this.gameObject);
         animator.SetBool("isDie", true);
         animator.SetTrigger("Hit");
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        this.enabled = false;
+        GetComponent<AttackCharacter>().enabled = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 }

@@ -15,6 +15,8 @@ public class EnemySwordinHade : Enemy {
         if (chill) Chill();
         if (angry) Angry();
         if (goBack) GoBack();
+
+        Debug.Log(character.position);
     }
 
     private void EnemyLogic() {
@@ -25,11 +27,11 @@ public class EnemySwordinHade : Enemy {
             goBack = false;
         }
 
-        if (Vector2.Distance(transform.position, character.position) < stoppingDistance)
-        {
-            angry = true;
-            chill = false;
-            goBack = false;
+        if (Vector2.Distance(transform.position, character.position) < stoppingDistance && !Character.IsDie)
+        {         
+             angry = true;
+             chill = false;
+             goBack = false;           
         }
 
         if (Vector2.Distance(transform.position, character.position) > stoppingDistance && chill == false)
@@ -38,6 +40,7 @@ public class EnemySwordinHade : Enemy {
             goBack = true;
             chill = false;
         }
+    
     }
 
     void Chill() {
@@ -100,15 +103,5 @@ public class EnemySwordinHade : Enemy {
         }
         speedAtMoment = ((float)speed / 100) + 0.02f;
         transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
-    }
-
-
-    public override void TakeDamage(int damage) {
-        currentHealth -= damage;
-        animator.SetTrigger("Hit");
-        animator.SetBool("isDie", false);
-
-        if (currentHealth <= 0)
-            Die();
     }
 }

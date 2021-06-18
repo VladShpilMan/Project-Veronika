@@ -22,7 +22,7 @@ public class EnemyAttack : MonoBehaviour {
 
     private void Update() {
         FlipGizmos();
-        Attack();
+        if(!Character.IsDie) Attack();
     }
 
     private void Attack() {

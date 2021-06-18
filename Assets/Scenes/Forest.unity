@@ -7505,10 +7505,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1089629687}
-  - component: {fileID: 1089629686}
   - component: {fileID: 1089629685}
   - component: {fileID: 1089629688}
   - component: {fileID: 1089629689}
+  - component: {fileID: 1089629686}
   m_Layer: 11
   m_Name: Squirrel
   m_TagString: Untagged
@@ -7535,8 +7535,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1089629686
-BoxCollider2D:
+--- !u!70 &1089629686
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7548,19 +7548,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.55}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.49}
+  m_Direction: 0
 --- !u!4 &1089629687
 Transform:
   m_ObjectHideFlags: 0
@@ -12590,7 +12580,7 @@ PrefabInstance:
     - target: {fileID: 7607596788412589397, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7607596788412589397, guid: e1999c61eabbabb4c94c7679f0de64d0,
         type: 3}
@@ -15474,6 +15464,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Character '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651005119932302826, guid: 434200c0a9bd17543abf351dfefee88d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 434200c0a9bd17543abf351dfefee88d, type: 3}

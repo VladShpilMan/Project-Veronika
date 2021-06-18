@@ -33,16 +33,4 @@ public class Enemy : Unit {
         sprite = GetComponentInChildren<SpriteRenderer>();
         character = GameObject.FindGameObjectWithTag("Character").transform;
     }
-
-    public virtual void TakeDamage(int damage) { }
-
-    protected void Die()
-    {
-        Debug.Log("Die");
-        animator.SetBool("isDie", true);
-        GetComponent<CapsuleCollider2D>().enabled = false;
-        this.enabled = false;
-        GetComponent<EnemyAttack>().enabled = false;
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-    }
 }
