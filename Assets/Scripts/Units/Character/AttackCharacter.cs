@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackCharacter : MonoBehaviour {
-    private bool isCombatMode = false;
+    private static bool isCombatMode = false;
     private Animator animator;
     private float nextAttackTime = 0F;
     private float attackRate = 3f;
@@ -13,6 +13,8 @@ public class AttackCharacter : MonoBehaviour {
     [SerializeField]private float attackRange; //Attack radius
     [SerializeField]private LayerMask enemyLayer;
     private SpriteRenderer sprite;
+
+    public static bool IsCombatMode { get { return isCombatMode; } }
 
     private void Start()
     {

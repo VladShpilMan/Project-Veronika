@@ -16,7 +16,6 @@ public class EnemySwordinHade : Enemy {
         if (angry) Angry();
         if (goBack) GoBack();
 
-        Debug.Log(character.position);
     }
 
     private void EnemyLogic() {
