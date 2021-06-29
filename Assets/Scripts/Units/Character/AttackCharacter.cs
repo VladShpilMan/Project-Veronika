@@ -14,12 +14,15 @@ public class AttackCharacter : MonoBehaviour {
     [SerializeField]private LayerMask enemyLayer;
     private SpriteRenderer sprite;
 
+    private CharacterAudioManager cut;
+
     public static bool IsCombatMode { get { return isCombatMode; } }
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        cut = GetComponent<CharacterAudioManager>();
     }
 
     private void Update() {
@@ -42,6 +45,8 @@ public class AttackCharacter : MonoBehaviour {
             if (Input.GetButtonDown("Fire1") && isCombatMode)
             {
                 animator.SetBool("isAttack", true);
+
+               // cut.CutSound();
 
                 Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 

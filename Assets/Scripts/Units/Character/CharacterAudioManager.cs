@@ -8,17 +8,20 @@ public class CharacterAudioManager : MonoBehaviour {
 
 	public enum StepsOn { Leaves, Wood }; // List of all types of surfaces
 
-	private string mainFolder = "Footsteps", leavesFolder = "Leaves", woodFolder = "Wood"; // These variables contain the path to the folder
+	// These variables contain the path to the folder
+	private string mainFolder = "Footsteps", leavesFolder = "Leaves", woodFolder = "Wood", cutFoldet = "Weapons and hand tools"; 
+
 	private AudioClip[] Leaves, Wood, Cut;
 
 	private AudioSource sourceSteps, sourceCut;
-	private AudioClip clip, nextClip;
+	private AudioClip stepClip, nextStepClip, cut;
+	//private AudioClip cutClip;
 
 	private void Start() {
-
+		Cut = Resources.LoadAll<AudioClip>(mainFolder + "/" + cutFoldet);
+		sourceCut = GetComponent<AudioSource>();
 		SettingFootstepSounds();		
 	}
-
 
 	private void SettingFootstepSounds() {
 		sourceSteps = GetComponent<AudioSource>();
@@ -32,13 +35,9 @@ public class CharacterAudioManager : MonoBehaviour {
 		sourceSteps.loop = false;
 	}
 
-	private void CutSound() {
-
-		if (Input.GetButtonDown("Fire1") && AttackCharacter.IsCombatMode)
-        {
-			
-		}
-    }
+	public void CutSound() {
+	
+	}
 
 	/*In the class Character, the tag of the surface on which the character is standing is searched 
 	  using the GetTag() method and passed using the method GetStep().
@@ -48,18 +47,20 @@ public class CharacterAudioManager : MonoBehaviour {
         switch (stepsOn)
         {
             case StepsOn.Leaves:
-                clip = Leaves[0];
+                stepClip = Leaves[0];
                 break;
             case StepsOn.Wood:
-                clip = Wood[0];
+                stepClip = Wood[0];
                 break;
         }
 
-		if(clip != nextClip || !(Character.IsMove && Character.IsGround)) sourceSteps.Stop();
+        if (stepClip != nextStepClip || !(Character.IsMove && Character.IsGround)) sourceSteps.Stop();
 
-		if ((!sourceSteps.isPlaying || clip != nextClip) && Character.IsMove && Character.IsGround) {
-			sourceSteps.PlayOneShot(clip, volume);
-			nextClip = clip;
-		}
-	}
+        if ((!sourceSteps.isPlaying || stepClip != nextStepClip) && Character.IsMove && Character.IsGround)
+        {
+            //stepClip = Cut[0];
+            sourceSteps.PlayOneShot(stepClip, volume);
+            nextStepClip = stepClip;
+        }
+    }
 }
