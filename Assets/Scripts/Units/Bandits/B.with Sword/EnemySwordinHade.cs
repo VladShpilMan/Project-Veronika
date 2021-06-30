@@ -8,11 +8,47 @@ public class EnemySwordinHade : Enemy {
     [SerializeField] private int positionOfPatrol;
     [SerializeField] protected float stoppingDistance;
     [SerializeField] private float expectation;
+    [SerializeField] private float rayDistance = 3F;
+
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float checkRadius;
+    [SerializeField] private LayerMask whatIsGround;
+
+    private bool isGround;
+
+    private void Awake()
+    {
+        Physics2D.queriesStartInColliders = false;
+    }
+
 
     void FixedUpdate() {
         EnemyLogic();
+        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        animator.SetBool("isGround", isGround);
 
-        if (chill) Chill();
+
+        if (movingRight)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.right, rayDistance);
+           
+            if (hit.collider != null && !hit.collider.tag.Equals("Character"))
+            {
+                rigidbody.velocity = Vector2.up * jumpForce;
+            }
+            
+        }
+        else if (!movingRight)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.left, rayDistance);
+            if (hit.collider != null && !hit.collider.tag.Equals("Character"))
+            {
+                rigidbody.velocity = Vector2.up * jumpForce;
+            }
+        }
+
+        
+        if (chill) Chill(); 
         if (angry) Angry();
         if (goBack) GoBack();
 
@@ -86,8 +122,16 @@ public class EnemySwordinHade : Enemy {
     }
 
     private void FlipX() {
-        if(character.transform.position.x > transform.position.x) sprite.flipX = false;
-            else sprite.flipX = true;
+        if (character.transform.position.x > transform.position.x)
+        {
+            sprite.flipX = false;
+            movingRight = true;
+        }
+        else
+        {
+            sprite.flipX = true;
+            movingRight = false;
+        }
     }
 
     void GoBack() {
@@ -95,12 +139,24 @@ public class EnemySwordinHade : Enemy {
         if (point.position.x - transform.position.x > 0)
         {
             sprite.flipX = false;
+            movingRight = true;
         }
         else
         {
             sprite.flipX = true;
+            movingRight = false;
         }
         speedAtMoment = ((float)speed / 100) + 0.02f;
         transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.localScale.x * Vector3.right * rayDistance);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.localScale.x * Vector3.left * rayDistance);
+
     }
 }
