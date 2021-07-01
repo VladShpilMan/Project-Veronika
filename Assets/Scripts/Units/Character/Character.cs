@@ -29,6 +29,7 @@ public class Character : Unit {
 
         currentHealth = maxHealth;
         speedX = speed / 100;
+        isDie = false;
     }
 
     private void GetReferences() { // Function for getting components

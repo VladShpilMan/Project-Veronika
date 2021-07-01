@@ -15,6 +15,7 @@ public class Enemy : Unit {
 
     [SerializeField] protected float speedAnim;
     [SerializeField] protected float attackRate;
+    [SerializeField] protected float stoppingDistance;
     protected float nextAttackTime;
     protected float speedAtMoment;
 
