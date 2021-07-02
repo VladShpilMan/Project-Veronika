@@ -8,6 +8,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
     [SerializeField] protected int maxHealth;
     protected int currentHealth;
+    protected bool movingRight;
     [SerializeField] protected float speed;
     [SerializeField] protected float jumpForce;
     protected SpriteRenderer sprite;
@@ -20,6 +21,7 @@ public class Unit : MonoBehaviour {
         {
             animator.SetTrigger("Hit");
             animator.SetBool("isDie", false);
+            rigidbody.AddForce(transform.up * 1.5F, ForceMode2D.Impulse);
         }
         else Die();
     }

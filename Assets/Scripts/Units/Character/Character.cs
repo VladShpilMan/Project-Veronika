@@ -7,6 +7,7 @@ public class Character : Unit {
     public static bool isGround, isMove, isDie = false;
     private float speedX;
     private new Collider2D collider;
+    
 
     private bool isMode = true;
 
@@ -55,24 +56,22 @@ public class Character : Unit {
         BattleMode();
     }
 
-    private void Run() {
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            sprite.flipX = false;
-            animator.SetBool("inMove", true);
-            transform.Translate(speedX, 0, 0);
-            isMove = true;
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            sprite.flipX = true;
-            animator.SetBool("inMove", true);
-            transform.Translate(-speedX, 0, 0);
-            isMove = true;
-        }
 
+    private void Run() {
+
+        if (Input.GetButton("Horizontal"))
+        {
+            Vector3 direction = transform.right * Input.GetAxis("Horizontal");
+            transform.Translate(speedX * direction.x, 0, 0);
+            isMove = true;
+            animator.SetBool("inMove", true);
+            sprite.flipX = direction.x < 0.0F;
+            movingRight = direction.x > 0.0F;
+        }
         else isMove = false;
+
     }
+
 
     private void Jump() {
         if(Input.GetButtonDown("Jump") && isGround)
@@ -119,18 +118,6 @@ public class Character : Unit {
                 foot.PlayStep(CharacterAudioManager.StepsOn.Wood, 0.3f);
                 break;
         }
-    }
-
-    public override void TakeDamage(int damage)
-    {
-
-        currentHealth -= damage;
-        if (currentHealth > 0)
-        {
-            animator.SetTrigger("Hit");
-            animator.SetBool("isDie", false);
-        }
-        else Die();
     }
 
     protected override void Die() {

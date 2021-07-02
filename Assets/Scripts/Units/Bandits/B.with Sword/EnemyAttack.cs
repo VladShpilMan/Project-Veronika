@@ -38,12 +38,19 @@ public class EnemyAttack : MonoBehaviour {
 
                     foreach (Collider2D character in hitCharacter)
                     {
-                        character.GetComponent<Character>().TakeDamage(attackDamage);
+
+                        StartCoroutine(WaitAndDamage(0.1F));
                     }
 
                     nextAttackTime = Time.time + 1F / attackRate;               
             }
         }
+    }
+
+    IEnumerator WaitAndDamage(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        character.GetComponent<Character>().TakeDamage(attackDamage);
     }
 
     private void OnDrawGizmosSelected() { // Draws a circle with a radius of attack for visual representation.

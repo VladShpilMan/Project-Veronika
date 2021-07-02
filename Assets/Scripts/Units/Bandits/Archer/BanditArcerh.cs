@@ -42,9 +42,16 @@ public class BanditArcerh : Enemy
             if (Time.time >= nextShootTime)
             {
                 animator.SetTrigger("isShoot");
-                Shoot();
+                
+                StartCoroutine(WaitAndAttack(0.5F));
                 nextShootTime = Time.time + 1F / shootRate;
             }
+    }
+
+    IEnumerator WaitAndAttack(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Shoot();
     }
 
     private void Shoot()

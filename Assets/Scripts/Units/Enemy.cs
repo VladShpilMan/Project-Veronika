@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Enemy : Unit {
 
-    protected bool movingRight;
     protected bool chill = false;
     protected bool angry = false;
     protected bool goBack = false;
