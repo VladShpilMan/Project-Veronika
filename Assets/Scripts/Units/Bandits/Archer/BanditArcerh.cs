@@ -7,7 +7,12 @@ public class BanditArcerh : Enemy
 
     private float nextShootTime = 0F;
     private float shootRate = 1f;
-
+    private bool inSafety = true;
+    private bool comeUp;
+    private bool canShoot;
+    [SerializeField] private float attackDistance;
+    [SerializeField] private float watchingDistance;
+    [SerializeField] private Transform point;
     private Arow arow;
      
     protected void Awake()
@@ -20,26 +25,70 @@ public class BanditArcerh : Enemy
     {
         EnemyLogic();
 
-        if (angry) Angry();
+        if (comeUp) ComeUp();
+        if (angry) Attack();
+        if (goBack) GoBack();
+        if (!inSafety) toKeepDistance();
     }
 
     private void EnemyLogic() {
-       
-        if (transform.position.y > character.transform.position.y - 2 && transform.position.y < character.transform.position.y + 2)
+
+        //RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, transform.localScale.x * Vector2.right, watchingDistance);
+        //foreach (RaycastHit2D rey in hit)
+        //    if (rey.collider.tag.Equals("Character") && inSafety) canShoot = true;
+        //        else canShoot = false;
+        //if (canShoot)
+        //{ 
+        float cordMax = transform.position.y + 1f;
+        float cordMin = transform.position.y - 1f;
+        Debug.Log(cordMax > character.transform.position.y && cordMin < character.transform.position.y);
+        if (cordMax > character.transform.position.y && cordMin < character.transform.position.y && inSafety)
         {
-            if (Vector2.Distance(transform.position, character.position) < stoppingDistance && !Character.IsDie)
+            if (Vector2.Distance(transform.position, character.position) < attackDistance && !Character.IsDie)
             {
                 angry = true;
+                comeUp = false;
+                goBack = false;
+                chill = false;
             }
-            else
+
+            if (Vector2.Distance(transform.position, character.position) < watchingDistance &&
+                Vector2.Distance(transform.position, character.position) > attackDistance &&
+                !Character.IsDie)
+            {
+                comeUp = true;
                 angry = false;
+                goBack = false;
+                chill = false;
+            }
         }
-        else 
+
+        if(Vector2.Distance(transform.position, character.position) > watchingDistance)
+        {
             angry = false;
+            comeUp = false;
+            goBack = true;
+        }
+
+        if(Vector2.Distance(transform.position, character.position) < stoppingDistance)
+        {
+            angry = false;
+            inSafety = false;
+        }
     }
 
-    private void Angry() {
-            if (Time.time >= nextShootTime)
+    private void ComeUp()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, character.position, speed);
+        animator.SetBool("isMove", true);
+    }
+
+
+    private void Attack() {
+        movingRight = transform.position.x > character.position.x;
+        sprite.flipX = movingRight;
+        animator.SetBool("isMove", false);
+        if (Time.time >= nextShootTime)
             {
                 animator.SetTrigger("isShoot");
                 
@@ -65,8 +114,45 @@ public class BanditArcerh : Enemy
         else newArow.Direction = -newArow.transform.right;
     }
 
+    private void toKeepDistance()
+    {
+
+        int direction = transform.position.x > character.position.x ? 1 : -1;
+        float chek = Mathf.Abs(transform.position.x - character.position.x);
+        sprite.flipX = direction < 0.0F;
+
+        if (chek < 5)
+        {
+            animator.SetBool("isMove", true);
+            transform.Translate(speed * direction, 0, 0);
+        }
+        else
+            inSafety = true;
+    }
+
+    private void GoBack()
+    {
+        animator.SetBool("inMove", true);
+        if (point.position.x - transform.position.x > 0)
+        {
+            sprite.flipX = false;
+            movingRight = true;
+        }
+        else
+        {
+            sprite.flipX = true;
+            movingRight = false;
+        }
+        speedAtMoment = ((float)speed / 100) + 0.02f;
+        transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
+    }
+
+
     private void OnDrawGizmos()
     {
+        Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.right);
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.right);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + stoppingDistance * Vector3.right);
     }

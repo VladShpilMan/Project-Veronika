@@ -116,7 +116,7 @@ public class EnemySwordinHade : Enemy {
         }
     }
 
-    void GoBack() {
+    private void GoBack() {
         animator.SetBool("inMove", true);
         if (point.position.x - transform.position.x > 0)
         {
