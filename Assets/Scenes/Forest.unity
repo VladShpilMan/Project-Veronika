@@ -447,7 +447,7 @@ PrefabInstance:
     - target: {fileID: 2166825083374723945, guid: fef8f7090bb05f448a2016603291261c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: 1.73
       objectReference: {fileID: 0}
     - target: {fileID: 2166825083374723945, guid: fef8f7090bb05f448a2016603291261c,
         type: 3}
@@ -13919,7 +13919,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847850741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -1.65, z: 0}
+  m_LocalPosition: {x: 6.5, y: -1.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 685655819}
@@ -13999,10 +13999,12 @@ MonoBehaviour:
   jumpForce: 0
   speedAnim: 0
   attackRate: 0
-  stoppingDistance: 2
+  stoppingDistance: 5
   attackDistance: 6
-  watchingDistance: 10
+  watchingDistance: 8
+  dangerousDistance: 2
   point: {fileID: 673719460}
+  positionOfPatrol: 2
 --- !u!1 &1870416259
 GameObject:
   m_ObjectHideFlags: 0
@@ -15416,12 +15418,12 @@ PrefabInstance:
     - target: {fileID: 7651005119932302822, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.86
+      value: 17.17
       objectReference: {fileID: 0}
     - target: {fileID: 7651005119932302822, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.51
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 7651005119932302822, guid: 434200c0a9bd17543abf351dfefee88d,
         type: 3}
