@@ -72,10 +72,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 881, y: 342}
-  m_MaxSize: {x: 16006, y: 8042}
+  m_MinSize: {x: 877, y: 342}
+  m_MaxSize: {x: 16002, y: 8042}
   vertical: 0
-  controlID: 114
+  controlID: 68
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -95,8 +95,8 @@ MonoBehaviour:
     y: 0
     width: 343
     height: 731
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -244,10 +244,10 @@ MonoBehaviour:
     y: 0
     width: 1193
     height: 731
-  m_MinSize: {x: 605, y: 342}
-  m_MaxSize: {x: 12005, y: 8042}
+  m_MinSize: {x: 602, y: 342}
+  m_MaxSize: {x: 12002, y: 8042}
   vertical: 1
-  controlID: 115
+  controlID: 69
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -270,8 +270,8 @@ MonoBehaviour:
     y: 0
     width: 1193
     height: 458
-  m_MinSize: {x: 605, y: 221}
-  m_MaxSize: {x: 12005, y: 4021}
+  m_MinSize: {x: 602, y: 221}
+  m_MaxSize: {x: 12002, y: 4021}
   vertical: 0
   controlID: 70
 --- !u!114 &12
@@ -293,8 +293,8 @@ MonoBehaviour:
     y: 0
     width: 789
     height: 458
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -376,14 +376,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.32941177
+    - e00: 0.72804743
       e01: 0
       e02: 0
-      e03: 133.58823
+      e03: -12.094791
       e10: 0
-      e11: 0.32941177
+      e11: 0.72804743
       e12: 0
-      e13: 118.29411
+      e13: -8.129728
       e20: 0
       e21: 0
       e22: 1
@@ -408,14 +408,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.9905342
+    - e00: 0.6548374
       e01: 0
       e02: 0
-      e03: 82.16967
+      e03: 153.49353
       e10: 0
-      e11: 0.9905342
+      e11: 0.6548374
       e12: 0
-      e13: -62.62491
+      e13: 0.36517334
       e20: 0
       e21: 0
       e22: 1
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 15028
+  m_LastSelectedObjectID: 14946
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -510,20 +510,20 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Units
+    - Assets/Scripts/Units/Bandits/Archer
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Units
+  - Assets/Scripts/Units/Bandits/Archer
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\MyGame\ProjectVeronika
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 124}
-    m_SelectedIDs: da410000
-    m_LastClickedID: 16858
-    m_ExpandedIDs: 00000000d2410000d4410000d6410000d8410000da410000dc410000f841000000ca9a3b
+    scrollPos: {x: 0, y: 72}
+    m_SelectedIDs: 86420000
+    m_LastClickedID: 17030
+    m_ExpandedIDs: 00000000d6410000d8410000da410000dc410000de410000e04100007c42000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -551,7 +551,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d2410000d4410000d6410000d8410000da410000dc410000
+    m_ExpandedIDs: 00000000d6410000d8410000da410000dc410000de410000e0410000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -576,8 +576,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 5a350000
-    m_LastClickedInstanceID: 13658
+    m_SelectedInstanceIDs: b2350000
+    m_LastClickedInstanceID: 13746
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000d6480000c4390000ce390000063c0000403b0000823c0000aa480000ca4800009a3900002894ffff123b00005a69000052440000885c000066430000763b01006e4c0000663900004e390000ec390000e0420000803a0000a8960000000000007c3b0000ca420000
     m_RenameOverlay:
@@ -674,23 +674,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5a350000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 62fbffff9c3a0000
+      m_SelectedIDs: b83a0000
+      m_LastClickedID: 15032
+      m_ExpandedIDs: 369fffff729fffffeaf8ffff80f9ffff62fbffff7e390000a03a0000b83a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Bandit Archer
+        m_OriginalName: Bandit Archer
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 15032
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 5}
       m_SearchString: 
@@ -736,9 +736,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.6588812, y: -0.10483818, z: -12.428637}
+    m_Target: {x: 1.7460304, y: -1.775862, z: -19.994741}
     speed: 2
-    m_Value: {x: 3.6588812, y: -0.10483818, z: -12.428637}
+    m_Value: {x: 1.6833001, y: -1.7131157, z: -19.988068}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -788,9 +788,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 4.063569
+    m_Target: 1.5494816
     speed: 2
-    m_Value: 4.063569
+    m_Value: 1.4827576
   m_Ortho:
     m_Target: 1
     speed: 2

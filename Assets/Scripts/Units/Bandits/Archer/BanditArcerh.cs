@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class BanditArcerh : Enemy
 {
-
-    private float nextShootTime = 0F;
-    private float shootRate = 1f;
-    private bool inSafety = true;
-    private bool comeUp;
-    private bool canShoot;
+    private bool inSafety;
+    private bool isGround;
     [SerializeField] private float attackDistance;
     [SerializeField] private float watchingDistance;
     [SerializeField] private int dangerousDistance;
     [SerializeField] private Transform point;
     [SerializeField] private int positionOfPatrol;
-    
+
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float checkRadius;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private float rayDistance = 3F;
+
     private Arow arow;
-     
+
+    private static bool _movingRight;
+    private static bool _angry;
+
+    public static bool MovingRight { get { return _movingRight; } }
+    public static bool _Angry { get { return _angry; } }
+
     protected void Awake()
     {
         arow = Resources.Load<Arow>("Arow");
@@ -28,12 +35,20 @@ public class BanditArcerh : Enemy
     
     private void FixedUpdate()
     {
+        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        animator.SetBool("isGround", isGround);
+
         EnemyLogic();
 
         if (angry) Angry();
         if (goBack) GoBack();
         if (chill) Chill();
         if (!inSafety) toKeepDistance();
+
+        _movingRight = movingRight;
+        _angry = angry;
+
+        Jump();
     }
 
     private void EnemyLogic() {
@@ -142,25 +157,55 @@ public class BanditArcerh : Enemy
         transform.position = Vector2.MoveTowards(transform.position, point.position, speedAtMoment);
     }
 
+    private void Jump()
+    {
+        Vector3 error = new Vector3(0, 0.5f, 0);
+        if (movingRight)
+        {
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position + error, transform.localScale.x * Vector2.right, rayDistance);
+            foreach(RaycastHit2D rey in hit) 
+                if (rey.collider != null && !rey.collider.tag.Equals("Character") && !rey.collider.tag.Equals("Enemy") && isGround)
+                {
+                    rigidbody.velocity = Vector2.up * jumpForce;
+                }
+
+        }
+        else if (!movingRight)
+        {
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position + error, transform.localScale.x * Vector2.left, rayDistance);
+            foreach (RaycastHit2D rey in hit)
+                if (rey.collider != null && !rey.collider.tag.Equals("Character") && !rey.collider.tag.Equals("Enemy") && isGround)
+                {
+                    rigidbody.velocity = Vector2.up * jumpForce;
+                }
+        }
+    }
+
 
     private void OnDrawGizmos()
     {
-        if (movingRight)
-        {
-            Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.right);
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.right);
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.right);
-        }
-        else
-        {
-            Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.left);
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.left);
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.left);
-        }
+        //if (movingRight)
+        //{
+        //    Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.right);
+        //    Gizmos.color = Color.green;
+        //    Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.right);
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.right);
+        //}
+        //else
+        //{
+        //    Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.left);
+        //    Gizmos.color = Color.green;
+        //    Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.left);
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.left);
+        //}
+        Vector3 error = new Vector3(0, 0.5f, 0);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.right * rayDistance);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.left * rayDistance);
     }
 
     protected override void Die()
