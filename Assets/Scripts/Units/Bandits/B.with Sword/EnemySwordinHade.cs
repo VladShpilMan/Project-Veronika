@@ -10,11 +10,11 @@ public class EnemySwordinHade : Enemy {
     [SerializeField] private float expectation;
     [SerializeField] private float rayDistance = 3F;
 
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float checkRadius;
-    [SerializeField] private LayerMask whatIsGround;
+    //[SerializeField] private Transform groundCheck;
+    //[SerializeField] private float checkRadius;
+    //[SerializeField] private LayerMask whatIsGround;
 
-    private bool isGround;
+    //private bool isGround;
 
     private void Awake()
     {
@@ -24,10 +24,11 @@ public class EnemySwordinHade : Enemy {
 
     void FixedUpdate() {
         EnemyLogic();
-        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-        animator.SetBool("isGround", isGround);
+        //isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        //animator.SetBool("isGround", isGround);
+        CheckGround();
 
-        
+
         if (chill) Chill(); 
         if (angry) Angry();
         if (goBack) GoBack();
@@ -92,14 +93,14 @@ public class EnemySwordinHade : Enemy {
         if (chek < 0) chek *= -1;
         FlipX();
         // the gameObject approaches the MainCharacter if the distance between them is greater than the parameter
-        if (chek >= 1.2)
+        if (chek >= 1.1)
         {
             speedAtMoment = ((float)speed / 100) + 0.02f;
             transform.position = Vector2.MoveTowards(transform.position, character.position, speedAtMoment);
             animator.SetBool("inMove", true);
         }     
         
-        if(chek < 1.2)
+        if(chek < 1.1)
             animator.SetBool("inMove", false);
     }
 

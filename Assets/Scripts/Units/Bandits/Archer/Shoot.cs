@@ -21,7 +21,6 @@ public class Shoot : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(BanditArcerh.MovingRight);
         RaycastHit2D[] whatSees;
         if (BanditArcerh.MovingRight) whatSees = Physics2D.RaycastAll(transform.position, transform.localScale.x * Vector2.right, attackDistance);
             else whatSees = Physics2D.RaycastAll(transform.position, transform.localScale.x * Vector2.left, attackDistance);

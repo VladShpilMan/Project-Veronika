@@ -5,16 +5,16 @@ using UnityEngine;
 public class BanditArcerh : Enemy
 {
     private bool inSafety;
-    private bool isGround;
+    //private bool isGround;
     [SerializeField] private float attackDistance;
     [SerializeField] private float watchingDistance;
     [SerializeField] private int dangerousDistance;
     [SerializeField] private Transform point;
     [SerializeField] private int positionOfPatrol;
 
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float checkRadius;
-    [SerializeField] private LayerMask whatIsGround;
+    //[SerializeField] private Transform groundCheck;
+    //[SerializeField] private float checkRadius;
+    //[SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float rayDistance = 3F;
 
     private Arow arow;
@@ -33,9 +33,7 @@ public class BanditArcerh : Enemy
     }
     
     private void FixedUpdate() {
-        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-        animator.SetBool("isGround", isGround);
-
+        CheckGround();
         EnemyLogic();
 
         if (angry) Angry();
@@ -155,7 +153,7 @@ public class BanditArcerh : Enemy
     private void Jump()
     {
         Vector3 error = new Vector3(0, 0.5f, 0);
-        if (movingRight)
+        if (!sprite.flipX)
         {
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position + error, transform.localScale.x * Vector2.right, rayDistance);
             foreach(RaycastHit2D rey in hit) 
@@ -165,7 +163,7 @@ public class BanditArcerh : Enemy
                 }
 
         }
-        else if (!movingRight)
+        else if (sprite.flipX)
         {
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position + error, transform.localScale.x * Vector2.left, rayDistance);
             foreach (RaycastHit2D rey in hit)

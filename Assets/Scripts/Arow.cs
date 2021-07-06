@@ -6,7 +6,8 @@ public class Arow : MonoBehaviour
 {
     private GameObject parent;
     private Vector3 direction;
-    private int attackDamage = 0;
+    private int attackDamage = 1;
+    private float repulsion = 0;
 
     public Vector3 Direction { set { direction = value; } }
     public GameObject Parent { set { parent = value; } get { return parent; } }
@@ -30,7 +31,7 @@ public class Arow : MonoBehaviour
       
         if (unit && unit.gameObject != parent && unit is Character)
         {
-            collider.GetComponent<Character>().TakeDamage(attackDamage);
+            collider.GetComponent<Character>().TakeDamage(attackDamage, repulsion);
 
             Destroy(gameObject);
         }

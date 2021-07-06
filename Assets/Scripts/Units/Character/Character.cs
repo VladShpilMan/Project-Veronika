@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Character : Unit {
 
-    public static bool isGround, isMove, isDie = false;
+    public static bool _isGround, isMove, isDie = false;
     private float speedX;
     private new Collider2D collider;
     
 
     private bool isMode = true;
 
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float checkRadius;
-    [SerializeField] private LayerMask whatIsGround;
+    //[SerializeField] private Transform groundCheck;
+    //[SerializeField] private float checkRadius;
+    //[SerializeField] private LayerMask whatIsGround;
 
-    public static bool IsGround { get { return isGround; } }
+    public static bool IsGround { get { return _isGround; } }
     public static bool IsMove { get { return isMove; } }
 
     public static bool IsDie { get { return isDie; } }
@@ -42,10 +42,11 @@ public class Character : Unit {
     }
 
     private void FixedUpdate() {
+        _isGround = isGround;
         animator.SetBool("inMove", false);
-        animator.SetBool("isGround", isGround);
-        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-      
+
+        CheckGround();
+
         Run();
         GetTag();
         GetStep();

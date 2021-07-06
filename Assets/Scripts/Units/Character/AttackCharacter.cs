@@ -8,6 +8,7 @@ public class AttackCharacter : MonoBehaviour {
     private float nextAttackTime = 0F;
     private float attackRate = 3f;
     [SerializeField] private int attackDamage;
+    [SerializeField] private float repulsion;
 
     [SerializeField]private Transform attackPoint; // This point is the center of the radius of the circle of the attack zone
     [SerializeField]private float attackRange; //Attack radius
@@ -23,6 +24,7 @@ public class AttackCharacter : MonoBehaviour {
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         cut = GetComponent<CharacterAudioManager>();
+        isCombatMode = false;
     }
 
     private void Update() {
@@ -31,6 +33,7 @@ public class AttackCharacter : MonoBehaviour {
         EnteringCombatMode();
         Attack();
         FlipGizmos();
+        Debug.Log(isCombatMode);
     }
 
 
@@ -52,7 +55,7 @@ public class AttackCharacter : MonoBehaviour {
 
                 foreach(Collider2D enemy in hitEnemies)
                     {
-                        enemy.GetComponent<Unit>().TakeDamage(attackDamage);
+                        enemy.GetComponent<Unit>().TakeDamage(attackDamage, repulsion);
                     }
 
                 nextAttackTime = Time.time + 1F / attackRate;
