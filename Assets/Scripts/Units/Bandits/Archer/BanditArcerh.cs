@@ -25,16 +25,14 @@ public class BanditArcerh : Enemy
     public static bool MovingRight { get { return _movingRight; } }
     public static bool _Angry { get { return _angry; } }
 
-    protected void Awake()
-    {
+    protected void Awake() {
         arow = Resources.Load<Arow>("Arow");
         sprite = GetComponentInChildren<SpriteRenderer>();
         movingRight = true;
         inSafety = true;
     }
     
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         animator.SetBool("isGround", isGround);
 
@@ -96,11 +94,9 @@ public class BanditArcerh : Enemy
             animator.SetBool("isMove", true);
         }
         else animator.SetBool("isMove", false);
-
     }
 
-    private void toKeepDistance()
-    {
+    private void toKeepDistance() {
 
         int direction = transform.position.x > character.position.x ? 1 : -1;
         float chek = Mathf.Abs(transform.position.x - character.position.x);
@@ -113,11 +109,10 @@ public class BanditArcerh : Enemy
         }
         else
             inSafety = true;
-
     }
 
-    private void Chill()
-    {
+    private void Chill() {
+
         animator.SetBool("isMove", true);
         if (transform.position.x > point.position.x + positionOfPatrol)
         {
@@ -184,38 +179,38 @@ public class BanditArcerh : Enemy
 
     private void OnDrawGizmos()
     {
-        //if (movingRight)
-        //{
-        //    Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.right);
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.right);
-        //    Gizmos.color = Color.red;
-        //    Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.right);
-        //}
-        //else
-        //{
-        //    Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.left);
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.left);
-        //    Gizmos.color = Color.red;
-        //    Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.left);
-        //}
-        Vector3 error = new Vector3(0, 0.5f, 0);
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.right * rayDistance);
+        if (movingRight)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.right);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.right);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.right);
+        }
+        else
+        {
+            Gizmos.DrawLine(transform.position, transform.position + watchingDistance * Vector3.left);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + attackDistance * Vector3.left);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + dangerousDistance * Vector3.left);
+        }
+        //Vector3 error = new Vector3(0, 0.5f, 0);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.right * rayDistance);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.left * rayDistance);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(transform.position + error, transform.position + error + transform.localScale.x * Vector3.left * rayDistance);
     }
 
     protected override void Die()
     {
         Debug.Log("Die " + this.gameObject);
-        //animator.SetBool("isDie", true);
-        //animator.SetTrigger("Hit");
+        animator.SetBool("isDie", true);
+        animator.SetTrigger("Hit");
         GetComponent<CapsuleCollider2D>().enabled = false;
         this.enabled = false;
-        //GetComponent<EnemyAttack>().enabled = false;
+        GetComponent<Shoot>().enabled = false;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 }
