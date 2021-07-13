@@ -37,8 +37,8 @@ public class Bonfire : MonoBehaviour
         newSpotUp = Random.Range(30, 60);
         while (light.range != newSpotUp)
         {
-            var delta = 0.009f;
-            Debug.Log(delta);
+            var delta = 0.001f;
+            Debug.Log(light.range);
             if (light.range < newSpotUp) light.range += delta;
             else light.range -= delta;
             yield return new WaitForSeconds(1f / fps);

@@ -33,7 +33,6 @@ public class AttackCharacter : MonoBehaviour {
         EnteringCombatMode();
         Attack();
         FlipGizmos();
-        Debug.Log(isCombatMode);
     }
 
 

@@ -23,7 +23,6 @@ public class BanditTank : Enemy
 
         if (chill) Chill();
         if (inDefence) Defence();
-        Debug.Log(Vector2.Distance(transform.position, character.position) < defenceDistance);
     }
 
     private void EnemyLogic()
