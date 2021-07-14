@@ -42,7 +42,7 @@ public class Character : Unit {
         animator.SetBool("inMove", false);
 
         CheckGround();
-
+        Debug.Log(isGround);
         Run();
         GetTag();
         GetStep();
