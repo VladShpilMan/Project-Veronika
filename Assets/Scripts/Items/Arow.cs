@@ -26,14 +26,21 @@ public class Arow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Unit unit = collider.GetComponent<Unit>();
+        //Unit unit = collider.GetComponent<Unit>();
+        Player player = collider.GetComponent<Player>();
 
-      
-        if (unit && unit.gameObject != parent && unit is Character)
+        //if (unit && unit.gameObject != parent && unit is Player)
+        //{
+        //    collider.GetComponent<Player>().TakeDamage(attackDamage, repulsion);
+
+        //    Destroy(gameObject);
+        //}
+        if (player && player.gameObject != parent && player is Player)
         {
-            collider.GetComponent<Character>().TakeDamage(attackDamage, repulsion);
-
             Destroy(gameObject);
+            collider.GetComponent<Player>().TakeDamage(attackDamage, repulsion);
+
+            
         }
     }
 }

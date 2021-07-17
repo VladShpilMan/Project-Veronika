@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class InputComponent : MonoBehaviour
 {
+    #region DELEGATES and EVENTS
+    public delegate void SomeSound(string argument);
+    public event SomeSound someSound;
+    #endregion
     private Vector3 _direction;
     private bool _isMove, _movingRight, _isBattleMode, _isJump, _isAttact;
 
@@ -66,6 +70,7 @@ public class InputComponent : MonoBehaviour
                 {
                     _isAttact = true;
                     nextAttackTime = Time.time + 1F / attackRate;
+                    someSound("Attack");
                 }   
                     else _isAttact = false;
             }

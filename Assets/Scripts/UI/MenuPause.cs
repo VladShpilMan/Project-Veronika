@@ -6,7 +6,9 @@ public class MenuPause : MonoBehaviour
 {
     private static bool GameIsPaused = false;
 
-    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject _pauseMenuUI;
+
+    [SerializeField] private GameObject _darkPanelUI;
 
     private void Update()
     {
@@ -25,14 +27,16 @@ public class MenuPause : MonoBehaviour
 
     private void Resume()
     {
-        pauseMenuUI.SetActive(false);
+        _pauseMenuUI.SetActive(false);
+        _darkPanelUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
     private void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        _pauseMenuUI.SetActive(true);
+        _darkPanelUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }

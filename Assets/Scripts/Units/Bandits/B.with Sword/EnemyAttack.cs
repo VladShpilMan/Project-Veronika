@@ -26,7 +26,8 @@ public class EnemyAttack : MonoBehaviour {
     private void Update()
     {
         FlipGizmos();
-        if (!Character.IsDie) Attack();
+        //if (!Character.IsDie) 
+            Attack();
     }
 
     private void Attack()
@@ -55,7 +56,7 @@ public class EnemyAttack : MonoBehaviour {
     IEnumerator WaitAndDamage(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        character.GetComponent<Character>().TakeDamage(attackDamage, repulsion);
+        character.GetComponent<Player>().TakeDamage(attackDamage, repulsion);
     }
 
     private void OnDrawGizmosSelected()

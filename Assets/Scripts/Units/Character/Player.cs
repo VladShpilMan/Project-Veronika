@@ -4,40 +4,62 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region DELEGATES and EVENTS
+    public delegate void HealthChange(float argument, float health);
+    public event HealthChange healthChange;
+    #endregion
+
+    #region ISPECTOR DATAS
     [SerializeField] private float _health;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float checkRadius;
     [SerializeField] private LayerMask whatIsGround;
-    private bool _isGround;
+    #endregion
 
-    [HideInInspector] public new Rigidbody2D _rigidbody;
-    private Animator _animator;
-    private SpriteRenderer _sprite;
-
-    private InputComponent _input;
-    private PhysicsComponent _physics;
-    private GraphicsComponent _graphics;
-    private AttackComponent _attack;
-
+    #region PUBLIC
     public bool IsGround => _isGround;
     public Animator GetAnimator => _animator;
     public SpriteRenderer Sprite => _sprite;
     public float Speed => _speed;
     public float JumpForce => _jumpForce;
 
+    [HideInInspector] public Rigidbody2D _rigidbody;
+    #endregion
+
+    #region PRIVATE
+    private Animator _animator;
+    private SpriteRenderer _sprite;
+    private InputComponent _input;
+    private PhysicsComponent _physics;
+    private GraphicsComponent _graphics;
+    private AttackComponent _attack;
+    private SoundComponent _sound;
+    private bool _isGround;
+    #endregion
+
+
+    #region MONO
     private void Start()
+    {
+        GetReferences();
+        _sound.SoundStart(_input);
+    }
+
+    private void GetReferences()
     {
         _input = GetComponent<InputComponent>();
         _physics = GetComponent<PhysicsComponent>();
         _graphics = GetComponent<GraphicsComponent>();
         _attack = GetComponent<AttackComponent>();
+        _sound = GetComponent<SoundComponent>();
 
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
     }
+    #endregion
 
     private void Update()
     {
@@ -53,4 +75,28 @@ public class Player : MonoBehaviour
         _physics.PhysicsComponentFixedUpdate(this, _input);
     }
 
+    public void TakeDamage(int damage, float repulsion)
+    {
+        _health -= damage;
+        if (_health > 0)
+        {
+            _animator.SetTrigger("Hit");
+            _animator.SetBool("isDie", false);
+            _rigidbody.AddForce(transform.up * 1.5F, ForceMode2D.Impulse);
+            if (repulsion != 0) _rigidbody.AddForce(transform.right * repulsion, ForceMode2D.Impulse);
+
+            healthChange(damage, _health);
+        }
+        else Die();
+    }
+
+    protected void Die()
+    {
+        Debug.Log("Die " + this.gameObject);
+        _animator.SetBool("isDie", true);
+        _animator.SetTrigger("Hit");
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        this.enabled = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+    }
 }

@@ -1244,7 +1244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 403421104}
   - component: {fileID: 403421105}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3536,9 +3536,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1478048747}
   - component: {fileID: 1478048746}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
