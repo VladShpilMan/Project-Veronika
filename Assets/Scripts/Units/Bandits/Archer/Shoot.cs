@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    protected Animator animator;
+    private Animator animator;
     [SerializeField] private float attackDistance;
     private float nextShootTime = 0F;
     private float shootRate = 1f;

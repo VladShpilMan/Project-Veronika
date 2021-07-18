@@ -13,9 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _health;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float checkRadius;
-    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float _checkRadius;
+    [SerializeField] private LayerMask _whatIsGround;
     #endregion
 
     #region PUBLIC
@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
     public SpriteRenderer Sprite => _sprite;
     public float Speed => _speed;
     public float JumpForce => _jumpForce;
+    public Transform GroundCheck => _groundCheck;
+    public float CheckRadius => _checkRadius;
+    public LayerMask WhatIsGround => _whatIsGround;
 
     [HideInInspector] public Rigidbody2D _rigidbody;
     #endregion
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
     private GraphicsComponent _graphics;
     private AttackComponent _attack;
     private SoundComponent _sound;
+    private StepsSound _steps;
     private bool _isGround;
     #endregion
 
@@ -45,6 +49,7 @@ public class Player : MonoBehaviour
     {
         GetReferences();
         _sound.SoundStart(_input);
+        _steps.StepsStart(_input);
     }
 
     private void GetReferences()
@@ -54,6 +59,7 @@ public class Player : MonoBehaviour
         _graphics = GetComponent<GraphicsComponent>();
         _attack = GetComponent<AttackComponent>();
         _sound = GetComponent<SoundComponent>();
+        _steps = GetComponentInChildren<StepsSound>();
 
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        _isGround = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _whatIsGround);
         _input.InputUpdate(this);
         _physics.PhysicsComponentUpdate(this, _input);
         _graphics.GraphicsUpdate(this, _input);
