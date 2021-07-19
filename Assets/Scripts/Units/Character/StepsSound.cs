@@ -63,7 +63,7 @@ public class StepsSound : MonoBehaviour
             if ((!_sourceSteps.isPlaying || _stepClip != _nextStepClip) && input.IsMove)
             {
 
-                _sourceSteps.PlayOneShot(_stepClip, 0.8f);
+                _sourceSteps.PlayOneShot(_stepClip, 0.5f);
                 _nextStepClip = _stepClip;
                 noMove = false;
             }

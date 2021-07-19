@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     #region DELEGATES and EVENTS
     public delegate void HealthChange(float argument, float health);
     public event HealthChange healthChange;
+
+    public delegate void HitSound(string argument);
+    public event HitSound hitSound;
     #endregion
 
     #region ISPECTOR DATAS
@@ -48,7 +51,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GetReferences();
-        _sound.SoundStart(_input);
+        _sound.SoundStart(this, _input);
         _steps.StepsStart(_input);
     }
 
@@ -92,6 +95,7 @@ public class Player : MonoBehaviour
             if (repulsion != 0) _rigidbody.AddForce(transform.right * repulsion, ForceMode2D.Impulse);
 
             healthChange(damage, _health);
+            hitSound("Hit");
         }
         else Die();
     }

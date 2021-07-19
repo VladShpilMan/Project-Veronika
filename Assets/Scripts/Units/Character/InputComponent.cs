@@ -60,6 +60,7 @@ public class InputComponent : MonoBehaviour
         if (Input.GetButtonDown("Jump") && player.IsGround)
         {
             _isJump = true;
+            someSound("Jump");
         }
         else _isJump = false;
     }
@@ -70,10 +71,12 @@ public class InputComponent : MonoBehaviour
             if (_isBattleMode)
             {
                 _isBattleMode = !_isBattleMode;
+                someSound("GetSword");
             }
             else
             {
                 _isBattleMode = !_isBattleMode;
+                someSound("GetSword");
             }
     }
 
