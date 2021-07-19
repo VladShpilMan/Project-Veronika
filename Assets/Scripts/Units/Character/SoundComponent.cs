@@ -20,10 +20,10 @@ public class SoundComponent : MonoBehaviour {
 
     private void GetReferences()
     {
-        _attack = Resources.Load<AudioClip>("Cut/PlayerSword");
-        _jump = Resources.Load<AudioClip>("Jump");
-        _getSword = Resources.Load<AudioClip>("Cut/GetSword"); 
-        _hit = Resources.Load<AudioClip>("Hit");
+        _attack = Resources.Load<AudioClip>("Character/Cut/PlayerSword");
+        _jump = Resources.Load<AudioClip>("Character/Jump");
+        _getSword = Resources.Load<AudioClip>("Character/Cut/GetSword"); 
+        _hit = Resources.Load<AudioClip>("Character/Hit");
     }
 
     private void SettingSounds()

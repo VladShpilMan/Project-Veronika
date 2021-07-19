@@ -21,8 +21,8 @@ public class StepsSound : MonoBehaviour
     {
         _sourceSteps = GetComponent<AudioSource>();
 
-        _leaves = Resources.LoadAll<AudioClip>("Footsteps/Leaves");
-        _wood = Resources.LoadAll<AudioClip>("Footsteps/Wood");
+        _leaves = Resources.LoadAll<AudioClip>("Character/Footsteps/Leaves");
+        _wood = Resources.LoadAll<AudioClip>("Character/Footsteps/Wood");
     }
 
     private void SettingSounds()

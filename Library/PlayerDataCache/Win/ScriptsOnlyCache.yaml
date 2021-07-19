@@ -7,6 +7,7 @@ ScriptsOnlyBuild:
     - BanditArcerh
     - BanditTank
     - Bonfire
+    - ButtonsSound
     - CameraController
     - Character
     - CharacterAudioManager
@@ -77,6 +78,7 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
@@ -119,6 +121,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 82
       Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 95
@@ -129,6 +133,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11418}
+    - Class: 114
+      Script: {instanceID: 11420}
     - Class: 114
       Script: {instanceID: 11426}
     - Class: 114
@@ -158,6 +164,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14184}
     - Class: 114
+      Script: {instanceID: 14250}
+    - Class: 114
       Script: {instanceID: 14402}
     - Class: 114
       Script: {instanceID: 14418}
@@ -180,10 +188,16 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16252}
     - Class: 114
+      Script: {instanceID: 16276}
+    - Class: 114
       Script: {instanceID: 16384}
     - Class: 114
       Script: {instanceID: 16388}
+    - Class: 114
+      Script: {instanceID: 21214}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -221,6 +235,8 @@ ScriptsOnlyBuild:
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
       Script: {instanceID: 0}
     - Class: 83
       Script: {instanceID: 0}
@@ -309,6 +325,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16068}
     - Class: 114
+      Script: {instanceID: 16276}
+    - Class: 114
       Script: {instanceID: 16338}
     - Class: 114
       Script: {instanceID: 16342}
@@ -320,6 +338,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16570}
     - Class: 114
       Script: {instanceID: 16576}
+    - Class: 114
+      Script: {instanceID: 21214}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1485,8 +1505,14 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 95d28c09356ebb44403571a1bb3faef8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ButtonsSound
   platform: 5
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/Forest.unity
-  playerPath: C:/MyGame/ProjectVeronika.exe
+  playerPath: C:/MyGame/Like in Old Tales.exe
