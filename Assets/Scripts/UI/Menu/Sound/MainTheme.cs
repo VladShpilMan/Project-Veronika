@@ -6,16 +6,20 @@ public class MainTheme : MonoBehaviour
 {
     [SerializeField] private AudioClip _music;
 
-    [SerializeField] private AudioSource _audioSource; 
-    
+    [SerializeField] private AudioSource _audioSource;
+
+    [SerializeField] private SoundVolume _sound;
+
     private void Start()
     {
-        _audioSource.PlayOneShot(_music, 1);
+        _audioSource.PlayOneShot(_music, 0.25F);
+
+        _sound.sound += SoundSwitch;
     }
 
-    private void Update()
+    private void SoundSwitch(float volume)
     {
-        _audioSource.volume = SoundVolume.Volume;
+        _audioSource.volume = volume;
     }
 
 }

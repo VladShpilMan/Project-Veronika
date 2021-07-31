@@ -6,6 +6,7 @@ public class PanelManager : MonoBehaviour
 {
     [SerializeField]private GameObject _mainPanel;
     [SerializeField]private GameObject _optionsPanel;
+    [SerializeField] private GameObject _line;
 
     public void SwitchPanel()
     {
@@ -13,11 +14,13 @@ public class PanelManager : MonoBehaviour
         {
             _mainPanel.SetActive(false);
             _optionsPanel.SetActive(true);
+            _line.SetActive(false);
         }
         else
         {
             _mainPanel.SetActive(true);
             _optionsPanel.SetActive(false);
+            _line.SetActive(false);
         }
     }
 }
