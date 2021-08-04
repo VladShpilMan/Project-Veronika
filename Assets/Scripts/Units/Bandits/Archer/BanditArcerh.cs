@@ -9,7 +9,7 @@ public class BanditArcerh : Enemy
     [SerializeField] private float attackDistance;
     [SerializeField] private float watchingDistance;
     [SerializeField] private int dangerousDistance;
-    [SerializeField] private Transform point;
+    [SerializeField]  private Transform point;
     [SerializeField] private int positionOfPatrol;
 
     //[SerializeField] private Transform groundCheck;
@@ -21,7 +21,7 @@ public class BanditArcerh : Enemy
 
     private static bool _movingRight;
     private static bool _angry;
-
+    protected Transform character;
     public static bool MovingRight { get { return _movingRight; } }
     public static bool _Angry { get { return _angry; } }
 
@@ -30,12 +30,29 @@ public class BanditArcerh : Enemy
         sprite = GetComponentInChildren<SpriteRenderer>();
         movingRight = true;
         inSafety = true;
+        Debug.Log("Hit");
+        
+        StartCoroutine(StartFunction());
     }
-    
+
+    private IEnumerator StartFunction()
+    {
+        //Wait for 5 sec.
+        yield return new WaitForSeconds(0.1f);
+
+        //Turn My game object that is set to false(off) to True(on).
+        Debug.Log(Player.TrasPos);
+        character = Player.TrasPos;
+    }
+    //private void Start()
+    //{
+    //    Debug.Log(Player.TrasPos);
+    //}
+
     private void FixedUpdate() {
         CheckGround();
         EnemyLogic();
-
+        
         if (angry) Angry();
         if (goBack) GoBack();
         if (chill) Chill();

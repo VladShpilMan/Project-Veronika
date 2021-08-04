@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public Transform GroundCheck => _groundCheck;
     public float CheckRadius => _checkRadius;
     public LayerMask WhatIsGround => _whatIsGround;
+    public static Transform TrasPos => _transformPos;
 
     [HideInInspector] public Rigidbody2D _rigidbody;
     #endregion
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     private SoundComponent _sound;
     private StepsSound _steps;
     private bool _isGround;
+    private static Transform _transformPos;
     #endregion
 
 
@@ -72,6 +74,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        _transformPos = transform;
         _isGround = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _whatIsGround);
         _input.InputUpdate(this);
         _physics.PhysicsComponentUpdate(this, _input);

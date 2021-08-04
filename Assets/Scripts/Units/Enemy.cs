@@ -31,6 +31,6 @@ public class Enemy : Unit {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        character = GameObject.FindGameObjectWithTag("Character").transform;
+        //character = GameObject.FindGameObjectWithTag("Character").transform;
     }
 }
