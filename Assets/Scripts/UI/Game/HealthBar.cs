@@ -11,6 +11,18 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         player.healthChange += TakeDamage;
+        //bar.fillAmount = ((bar.fillAmount * 100f * player.Health) / player.MaxHealth) / 100;
+        StartCoroutine(FillBar());
+    }
+
+    private IEnumerator FillBar()
+    {
+        //if(player.)
+        yield return new WaitForSeconds(0.23f);
+        float percentageРealth = bar.fillAmount;
+        float subtractPercentage = (player.Health * percentageРealth) / player.MaxHealth;
+
+        bar.fillAmount = subtractPercentage;
     }
 
     private void TakeDamage(float damage, float health)

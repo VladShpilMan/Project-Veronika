@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
     #region DELEGATES and EVENTS
     public delegate void HealthChange(float argument, float health);
@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region ISPECTOR DATAS
-    [SerializeField] private float _health;
+    //[SerializeField] private float maxHealth;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private Transform _groundCheck;
@@ -31,11 +31,14 @@ public class Player : MonoBehaviour
     public float CheckRadius => _checkRadius;
     public LayerMask WhatIsGround => _whatIsGround;
     public static Transform TrasPos => _transformPos;
+    public override float Health { get { return currentHealth; } set { currentHealth = value; } }
+    public override float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
 
     [HideInInspector] public Rigidbody2D _rigidbody;
     #endregion
 
     #region PRIVATE
+    //private float currentHealth;
     private Animator _animator;
     private SpriteRenderer _sprite;
     private InputComponent _input;
@@ -55,6 +58,11 @@ public class Player : MonoBehaviour
         GetReferences();
         _sound.SoundStart(this, _input);
         _steps.StepsStart(_input);
+    }
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
     }
 
     private void GetReferences()
@@ -89,16 +97,17 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage, float repulsion)
     {
-        _health -= damage;
-        if (_health > 0)
+        currentHealth -= damage;
+        if (currentHealth > 0)
         {
             _animator.SetTrigger("Hit");
             _animator.SetBool("isDie", false);
             _rigidbody.AddForce(transform.up * 1.5F, ForceMode2D.Impulse);
             if (repulsion != 0) _rigidbody.AddForce(transform.right * repulsion, ForceMode2D.Impulse);
-
-            healthChange(damage, _health);
+            Debug.Log("Hit");
+            healthChange(damage, currentHealth);
             hitSound("Hit");
+            
         }
         else Die();
     }

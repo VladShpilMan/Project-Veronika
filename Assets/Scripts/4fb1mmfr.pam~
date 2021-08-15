@@ -1,0 +1,175 @@
+﻿using System.Collections;
+using UnityEngine;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
+using System.Xml.Linq;
+using System.Text;
+using System.Globalization;
+
+public class SaveLoad : MonoBehaviour
+{
+
+    private string path;
+
+    public List<SaveableObject> objects = new List<SaveableObject>();
+    public Dictionary<string, SaveableObject> countries = new Dictionary<string, SaveableObject>();
+
+    private void Start()
+    {
+        path = Application.persistentDataPath + "/savedGames.xml";
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y)) _Save();
+        if (Input.GetKeyDown(KeyCode.Backspace)) Load();
+    }
+
+    private void Save()
+    {
+        XElement root = new XElement("root");
+
+        //foreach (SaveableObject obj in objects)
+        //{
+        //    root.Add(obj.Health);
+        //}
+
+        foreach (var obj in countries)
+        {
+            root.Add(obj.Value.Health);
+        }
+
+        XDocument saveDoc = new XDocument(root);
+        File.WriteAllText(path, saveDoc.ToString());
+        Debug.Log(path);
+    }
+
+    private void _Save()
+    {
+        XElement units = new XElement("units");
+        
+
+        //foreach (SaveableObject obj in objects)
+        //{
+        //    XElement unit = new XElement("unit");
+
+        //    unit.Add(obj.GetPosition());
+        //    unit.Add(obj.GetHealth());
+        //    units.Add(unit);
+        //}
+        foreach (var obj in countries)
+        {
+            XElement unit = new XElement("unit");
+
+            unit.Add(obj.Value.GetPosition());
+            unit.Add(obj.Value.Health);
+            units.Add(unit);
+        }
+
+
+        XDocument xdoc = new XDocument(units);
+        File.WriteAllText(path, xdoc.ToString());
+        //xdoc.Save(path);
+    }
+
+    //private void Load()
+    //{
+    //    XElement root = null;
+
+    //    if (!File.Exists(path))
+    //    {
+    //        Debug.Log("Save data not found...");
+
+    //        if (File.Exists(Application.persistentDataPath + "/savedGames.xml"))
+    //            root = root = XDocument.Parse(File.ReadAllText(Application.persistentDataPath + "/savedGames.xml")).Element("units");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Save data found...");
+    //        root = XDocument.Parse(File.ReadAllText(path)).Element("units");
+    //    }
+
+    //    if (root == null)
+    //    {
+    //        Debug.Log("Level load failed");
+    //        return;
+    //    }
+    //    GenerateScene(root);
+    //}
+
+    private void Load()
+    {
+        XmlElement root = new XmlElement();
+        
+        if (!File.Exists(path))
+        {
+            Debug.Log("Save data not found...");
+
+            if (File.Exists(Application.persistentDataPath + "/savedGames.xml"))
+                root = XmlDocument.Parse(File.ReadAllText(Application.persistentDataPath + "/savedGames.xml")).Element("units");
+        }
+        else
+        {
+            Debug.Log("Save data found...");
+            root = XmlDocument.Parse(File.ReadAllText(path)).Element("units");
+        }
+
+        if (root == null)
+        {
+            Debug.Log("Level load failed");
+            return;
+        }
+        GenerateScene(root);
+    }
+
+    private void GenerateScene(XmlElement root)
+    {
+        foreach (var item in countries)
+        {
+            item.Value.DestroySelf();
+        }
+        countries.Clear();
+
+        //foreach (XmlNode node in oot)
+        //{
+
+        //}
+    }
+
+    private void _GenerateScene(XElement root)
+    {
+        //foreach (SaveableObject item in objects)
+        //{
+        //    item.DestroySelf();
+        //}
+        //objects.Clear();
+
+        foreach (var item in countries)
+        {
+            item.Value.DestroySelf();
+        }
+        countries.Clear();
+
+        foreach (XElement unit in root.Elements("unit"))
+        {
+           foreach(XElement data in unit.Elements("name"))
+            {
+                Vector3 position = Vector3.zero;
+                position.x = float.Parse(data.Attribute("x").Value, CultureInfo.InvariantCulture);
+                position.y = float.Parse(data.Attribute("y").Value, CultureInfo.InvariantCulture);
+                position.z = float.Parse(data.Attribute("z").Value, CultureInfo.InvariantCulture);
+                Debug.Log(data.Name == "name");
+                Instantiate(Resources.Load<GameObject>(data.Value), position, Quaternion.identity);
+                Debug.Log(data.Value);
+            }
+
+            foreach (XElement data in unit.Elements("health"))
+            {
+                float val = float.Parse(data.Value, CultureInfo.InvariantCulture);
+                //countries[data.Name].SetHealth(val);
+            }
+        }
+    }
+}

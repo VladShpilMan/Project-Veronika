@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
-    [SerializeField] protected int maxHealth;
-    protected int currentHealth;
+    [SerializeField] protected float maxHealth;
+    protected float currentHealth;
     protected bool movingRight;
     [SerializeField] protected float speed;
     [SerializeField] protected float jumpForce;
@@ -19,6 +19,9 @@ public class Unit : MonoBehaviour {
     [SerializeField] protected float checkRadius;
     [SerializeField] protected LayerMask whatIsGround;
     protected bool isGround;
+
+    public virtual float Health { get { return currentHealth; } set { currentHealth = value; } }
+    public virtual float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
 
     protected void CheckGround()
     {

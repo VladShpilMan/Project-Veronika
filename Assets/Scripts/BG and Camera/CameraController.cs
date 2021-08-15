@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public float dumping = 1.5F;
     public Vector2 offset = new Vector2(2f, 1f);
     public bool isLeft;
-    private Transform character;
+    [SerializeField] private Transform character;
     private int lastX;
 
     [SerializeField] float leftLimit;
@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
 
     void Start() {
         offset = new Vector2(Mathf.Abs(offset.x), offset.y);
-        FindCharacter(isLeft);
+        StartCoroutine(FindCharacter(isLeft));
     }
 
     void Update()
@@ -54,9 +54,9 @@ public class CameraController : MonoBehaviour
             );
     }
 
-    public void FindCharacter(bool playerIsLeft)
+    public IEnumerator FindCharacter(bool playerIsLeft)
     {
-        character = GameObject.FindGameObjectWithTag("Character").transform;
+        yield return new WaitForSeconds(0.1f);
         lastX = Mathf.RoundToInt(character.position.x);
 
         if (playerIsLeft)

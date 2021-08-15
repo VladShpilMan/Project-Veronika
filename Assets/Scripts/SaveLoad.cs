@@ -3,7 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using System.Xml.Linq;
+using System.Text;
 using System.Globalization;
 
 public class SaveLoad : MonoBehaviour
@@ -11,94 +13,100 @@ public class SaveLoad : MonoBehaviour
 
     private string path;
 
-    public List<SaveableObject> objects = new List<SaveableObject>();
+    public Dictionary<string, SaveableObject> objects = new Dictionary<string, SaveableObject>();
 
     private void Start()
     {
         path = Application.persistentDataPath + "/savedGames.xml";
+        Debug.Log(objects.Count);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y)) Save();
+        if (Input.GetKeyDown(KeyCode.Y)) _Save();
         if (Input.GetKeyDown(KeyCode.Backspace)) Load();
     }
 
-    private void Save()
+    private void _Save()
     {
-        XElement root = new XElement("root");
-
-        foreach (SaveableObject obj in objects)
+        XElement units = new XElement("units");
+        
+        foreach (var obj in objects)
         {
-            root.Add(obj.GetElement());
+            XElement unit = new XElement("unit");
+
+            XAttribute name = new XAttribute("name", obj.Value.GetUnit());
+
+            unit.Add(name);
+            unit.Add(obj.Value.GetPosition());
+            unit.Add(obj.Value.GetHealth());
+
+            units.Add(unit);
         }
 
-        XDocument saveDoc = new XDocument(root);
-        File.WriteAllText(path, saveDoc.ToString());
-        Debug.Log(path);
+        XDocument xdoc = new XDocument(units);
+        File.WriteAllText(path, xdoc.ToString());
     }
 
     private void Load()
     {
-        XElement root = null;
+        XmlDocument xDoc = new XmlDocument();
 
-        if (!File.Exists(path))
-        {
-            Debug.Log("Save data not found...");
+        xDoc.Load(path);
+        XmlElement root = xDoc.DocumentElement;
 
-            if (File.Exists(Application.persistentDataPath + "/savedGames.xml"))
-                root = root = XDocument.Parse(File.ReadAllText(Application.persistentDataPath + "/savedGames.xml")).Element("root");
-        }
-        else
-        {
-            Debug.Log("Save data found...");
-            root = XDocument.Parse(File.ReadAllText(path)).Element("root");
-        }
-
-        if (root == null)
-        {
-            Debug.Log("Level load failed");
-            return;
-        }
         GenerateScene(root);
     }
 
-    private void GenerateScene(XElement root)
+    private void GenerateScene(XmlElement root)
     {
-        foreach (SaveableObject item in objects)
+        foreach (var item in objects)
         {
-            item.DestroySelf();
+            item.Value.DestroySelf();
         }
         objects.Clear();
 
-        foreach (XElement instance in root.Elements("instance"))
+        foreach (XmlElement node in root)
         {
             Vector3 position = Vector3.zero;
+            float health = 0;
+            float maxHealth = 0;
+            foreach (XmlNode chnode in node.ChildNodes)
+            {
+                
+                if (chnode.Name == "position")
+                {                    
+                    position.x = float.Parse(chnode.Attributes.GetNamedItem("x").Value, CultureInfo.InvariantCulture);
+                    position.y = float.Parse(chnode.Attributes.GetNamedItem("y").Value, CultureInfo.InvariantCulture);
+                    position.z = float.Parse(chnode.Attributes.GetNamedItem("z").Value, CultureInfo.InvariantCulture);
+                }
 
-            position.x = float.Parse(instance.Attribute("x").Value, CultureInfo.InvariantCulture);
-            position.y = float.Parse(instance.Attribute("y").Value, CultureInfo.InvariantCulture);
-            position.z = float.Parse(instance.Attribute("z").Value, CultureInfo.InvariantCulture);
+                if (chnode.Name == "health")
+                {
+                    health = float.Parse(chnode.InnerText);
+                    maxHealth = float.Parse(chnode.Attributes.GetNamedItem("maxHealth").Value, CultureInfo.InvariantCulture);
+                }
+            }
+            XmlNode attr = node.Attributes.GetNamedItem("name");
 
-            Instantiate(Resources.Load<GameObject>(instance.Value), position, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>(SplitString(attr.Value)), position, Quaternion.identity);
+
+            StartCoroutine(Fade(attr, health, maxHealth));
         }
     }
 
-    //public void Save() {
-    //    savedGames.Add(Game.Current);
-    //    BinaryFormatter bf = new BinaryFormatter();
-    //    FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
-    //    bf.Serialize(file, savedGames);
-    //    file.Close();
-    //    Debug.Log("Save");
-    //}
+    public IEnumerator Fade(XmlNode attr, float health, float maxHealth)
+    {
+        yield return new WaitForSeconds(0.2f);
+        objects[attr.Value].SetHealth(health);
+        objects[attr.Value].SetMaxHealth(maxHealth);
+    }
 
-    //public void Load() {
-    //    if(File.Exists(Application.persistentDataPath + "/savedGames.gd")) {
-    //        BinaryFormatter bf = new BinaryFormatter();
-    //        FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
-    //        savedGames = (List<Game>)bf.Deserialize(file);
-    //        file.Close();
-    //        Debug.Log("Load");
-    //    }
-    //}
+    private string SplitString(string splittable)
+    {
+        string[] stringResult = splittable.Split(' ');
+        Debug.Log(stringResult[0]);
+
+        return stringResult[0];
+    }
 }

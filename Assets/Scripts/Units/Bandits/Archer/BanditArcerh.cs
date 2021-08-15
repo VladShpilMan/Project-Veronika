@@ -25,12 +25,14 @@ public class BanditArcerh : Enemy
     public static bool MovingRight { get { return _movingRight; } }
     public static bool _Angry { get { return _angry; } }
 
+    public override float Health { get { return currentHealth; } set { currentHealth = value; } }
+    public override float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
+
     protected void Awake() {
         arow = Resources.Load<Arow>("Arow");
         sprite = GetComponentInChildren<SpriteRenderer>();
         movingRight = true;
         inSafety = true;
-        Debug.Log("Hit");
         
         StartCoroutine(StartFunction());
     }
@@ -41,13 +43,8 @@ public class BanditArcerh : Enemy
         yield return new WaitForSeconds(0.1f);
 
         //Turn My game object that is set to false(off) to True(on).
-        Debug.Log(Player.TrasPos);
         character = Player.TrasPos;
     }
-    //private void Start()
-    //{
-    //    Debug.Log(Player.TrasPos);
-    //}
 
     private void FixedUpdate() {
         CheckGround();
