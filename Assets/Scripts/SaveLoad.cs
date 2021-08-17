@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Text;
 using System.Globalization;
+using UnityEngine.UI;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -14,11 +15,27 @@ public class SaveLoad : MonoBehaviour
     private string path;
 
     public Dictionary<string, SaveableObject> objects = new Dictionary<string, SaveableObject>();
+    public List<SaveInfo> saveButtons = new List<SaveInfo>();
+
+    [SerializeField] private InputField _inputField;
+
+    private static int _saveCounter = 0;
+
+    [SerializeField] private BaseSaveInfo saveInfo;
 
     private void Start()
     {
         path = Application.persistentDataPath + "/savedGames.xml";
-        Debug.Log(objects.Count);
+
+        SubscribeDelegates();
+    }
+
+    private void SubscribeDelegates()
+    {
+        foreach (SaveInfo button in saveButtons)
+        {
+            button.save += GenerateScene;
+        }
     }
 
     private void Update()
@@ -27,10 +44,10 @@ public class SaveLoad : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace)) Load();
     }
 
-    private void _Save()
+    public void _Save()
     {
         XElement units = new XElement("units");
-        
+
         foreach (var obj in objects)
         {
             XElement unit = new XElement("unit");
@@ -48,6 +65,37 @@ public class SaveLoad : MonoBehaviour
         File.WriteAllText(path, xdoc.ToString());
     }
 
+    public void NewSave()
+    {
+        if (_inputField.text != string.Empty)
+            path = Application.persistentDataPath + "/" + _inputField.text;
+        else
+        {
+            _saveCounter++;
+            path = Application.persistentDataPath + $"/savedGames({_saveCounter}).xml";
+        }
+
+        XElement units = new XElement("units");
+        XAttribute saveCounter = new XAttribute("saveCounter", _saveCounter);
+        units.Add(saveCounter);
+
+        foreach (var obj in objects)
+        {
+            XElement unit = new XElement("unit");
+
+            XAttribute name = new XAttribute("name", obj.Value.GetUnit());
+
+            unit.Add(name);
+            unit.Add(obj.Value.GetPosition());
+            unit.Add(obj.Value.GetHealth());
+
+            units.Add(unit);
+        }
+        Debug.Log("Save");
+        XDocument xdoc = new XDocument(units);
+        File.WriteAllText(path, xdoc.ToString());
+    }
+
     private void Load()
     {
         XmlDocument xDoc = new XmlDocument();
@@ -60,12 +108,13 @@ public class SaveLoad : MonoBehaviour
 
     private void GenerateScene(XmlElement root)
     {
+        Debug.Log("GenerateScene");
         foreach (var item in objects)
         {
             item.Value.DestroySelf();
         }
         objects.Clear();
-
+        Debug.Log(root.Attributes.GetNamedItem("saveCounter"));
         foreach (XmlElement node in root)
         {
             Vector3 position = Vector3.zero;
@@ -73,9 +122,9 @@ public class SaveLoad : MonoBehaviour
             float maxHealth = 0;
             foreach (XmlNode chnode in node.ChildNodes)
             {
-                
+
                 if (chnode.Name == "position")
-                {                    
+                {
                     position.x = float.Parse(chnode.Attributes.GetNamedItem("x").Value, CultureInfo.InvariantCulture);
                     position.y = float.Parse(chnode.Attributes.GetNamedItem("y").Value, CultureInfo.InvariantCulture);
                     position.z = float.Parse(chnode.Attributes.GetNamedItem("z").Value, CultureInfo.InvariantCulture);
