@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
+
+    protected bool isAlive = true;
     [SerializeField] protected float maxHealth;
     protected float currentHealth;
     protected bool movingRight;
@@ -20,6 +22,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] protected LayerMask whatIsGround;
     protected bool isGround;
 
+    public bool IsAlive { get { return isAlive; } }
     public virtual float Health { get { return currentHealth; } set { currentHealth = value; } }
     public virtual float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
 
@@ -36,9 +39,18 @@ public class Unit : MonoBehaviour {
             animator.SetTrigger("Hit");
             animator.SetBool("isDie", false);
             rigidbody.AddForce(transform.up * 1.5F, ForceMode2D.Impulse);
-            if(repulsion != 0) rigidbody.AddForce(transform.right * repulsion, ForceMode2D.Impulse);
+            if (repulsion != 0) rigidbody.AddForce(transform.right * repulsion, ForceMode2D.Impulse);
         }
-        else Die();
+        else {
+            Die();
+            NotAlive();
+        }
+    }
+
+    protected void NotAlive() {
+        Debug.Log(isAlive);
+        isAlive = false;
+        Debug.Log(isAlive);
     }
 
     protected virtual void Die() {

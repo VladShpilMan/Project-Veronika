@@ -11,31 +11,45 @@ using UnityEngine.UI;
 
 public class SaveLoad : MonoBehaviour
 {
+    #region Delegates
+    public delegate void GenerateSavePanel();
+    public event GenerateSavePanel generateSavePanel;
+    #endregion
 
-    private string path;
-
+   
+    #region Collections
     public Dictionary<string, SaveableObject> objects = new Dictionary<string, SaveableObject>();
     public List<SaveInfo> saveButtons = new List<SaveInfo>();
+    #endregion
 
+    #region ISPECTOR DATAS
     [SerializeField] private InputField _inputField;
+    [SerializeField] private BaseSaveInfo _saveInfo;
+    [SerializeField] private Saves _saves;
+    #endregion
 
     private static int _saveCounter = 0;
+    private string path;
+    private string pathh;
 
-    [SerializeField] private BaseSaveInfo saveInfo;
 
     private void Start()
     {
         path = Application.persistentDataPath + "/savedGames.xml";
-
+        //_saves.subscribeDelegates += SubscribeDelegates;
+        pathh = Application.persistentDataPath;
+        //_saveInfo.sendSave += GenerateScene;
         SubscribeDelegates();
     }
 
     private void SubscribeDelegates()
     {
-        foreach (SaveInfo button in saveButtons)
+        foreach (SaveInfo button in _saves.saveInfos)
         {
             button.save += GenerateScene;
+            Debug.Log(button.uiText.text);
         }
+        Debug.Log("outside");
     }
 
     private void Update()
@@ -53,8 +67,10 @@ public class SaveLoad : MonoBehaviour
             XElement unit = new XElement("unit");
 
             XAttribute name = new XAttribute("name", obj.Value.GetUnit());
+            XAttribute isAlive = new XAttribute("isAlive", obj.Value.GetAlive());
 
             unit.Add(name);
+            unit.Add(isAlive);
             unit.Add(obj.Value.GetPosition());
             unit.Add(obj.Value.GetHealth());
 
@@ -68,7 +84,7 @@ public class SaveLoad : MonoBehaviour
     public void NewSave()
     {
         if (_inputField.text != string.Empty)
-            path = Application.persistentDataPath + "/" + _inputField.text;
+            path = Application.persistentDataPath + "/" + _inputField.text + ".xml";
         else
         {
             _saveCounter++;
@@ -84,8 +100,10 @@ public class SaveLoad : MonoBehaviour
             XElement unit = new XElement("unit");
 
             XAttribute name = new XAttribute("name", obj.Value.GetUnit());
+            XAttribute isAlive = new XAttribute("isAlive", obj.Value.GetAlive());
 
             unit.Add(name);
+            unit.Add(isAlive);
             unit.Add(obj.Value.GetPosition());
             unit.Add(obj.Value.GetHealth());
 
@@ -94,29 +112,32 @@ public class SaveLoad : MonoBehaviour
         Debug.Log("Save");
         XDocument xdoc = new XDocument(units);
         File.WriteAllText(path, xdoc.ToString());
+        generateSavePanel();
+        //SubscribeDelegates();
     }
 
     private void Load()
     {
         XmlDocument xDoc = new XmlDocument();
-
-        xDoc.Load(path);
+        Debug.Log("Nie ok");
+        xDoc.Load(pathh);
         XmlElement root = xDoc.DocumentElement;
-
+        
         GenerateScene(root);
     }
 
     private void GenerateScene(XmlElement root)
     {
-        Debug.Log("GenerateScene");
+        //SubscribeDelegates();
         foreach (var item in objects)
         {
             item.Value.DestroySelf();
         }
         objects.Clear();
-        Debug.Log(root.Attributes.GetNamedItem("saveCounter"));
+        Debug.Log("Root " + root.InnerXml);
         foreach (XmlElement node in root)
         {
+            //Debug.Log("Node");
             Vector3 position = Vector3.zero;
             float health = 0;
             float maxHealth = 0;
@@ -159,3 +180,4 @@ public class SaveLoad : MonoBehaviour
         return stringResult[0];
     }
 }
+

@@ -35,19 +35,19 @@ public class Scrolling : MonoBehaviour
 
     private void Update()
     {
-        float deltaX = cameraTransform.position.x - lastCameraX;
-        transform.position += Vector3.right * (deltaX * paralaxSpeed);
-        lastCameraX = cameraTransform.position.x;
+        //float deltaX = cameraTransform.position.x - lastCameraX;
+        //transform.position += Vector3.right * (deltaX * paralaxSpeed);
+        //lastCameraX = cameraTransform.position.x;
 
-        if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
-        {
-            ScrollLeft();
-        }
+        //if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
+        //{
+        //    ScrollLeft();
+        //}
 
-        if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
-        {
-            ScrollRight();
-        }
+        //if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
+        //{
+        //    ScrollRight();
+        //}
 
         //if (Input.GetKeyDown(KeyCode.A))
         //{
