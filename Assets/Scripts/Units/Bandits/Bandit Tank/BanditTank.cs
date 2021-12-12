@@ -13,7 +13,7 @@ public class BanditTank : Enemy
 
     private void Awake()
     {
-
+        StartCoroutine(StartFunction());
     }
 
     private void FixedUpdate()
@@ -23,6 +23,15 @@ public class BanditTank : Enemy
 
         if (chill) Chill();
         if (inDefence) Defence();
+    }
+
+    private IEnumerator StartFunction()
+    {
+        //Wait for 5 sec.
+        yield return new WaitForSeconds(0.1f);
+
+        //Turn My game object that is set to false(off) to True(on).
+        character = Player.TrasPos;
     }
 
     private void EnemyLogic()

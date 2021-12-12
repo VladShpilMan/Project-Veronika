@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collision)
+    private GameObject _camera;
+
+    public void Start()
     {
-        Destroy(collision.gameObject);
+        StartCoroutine(StartFunction());
+    }
+
+    private void Update()
+    {
+        _camera = GameObject.FindWithTag("MainCamera");
+        Debug.Log("==========" + _camera.transform.position);
+    }
+
+    private IEnumerator StartFunction()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        _camera = GameObject.FindWithTag("MainCamera");
     }
 }

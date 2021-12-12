@@ -56,7 +56,7 @@ public class SaveableObject : MonoBehaviour
 
     public bool GetAlive()
     {
-        return unit.IsAlive;
+        return unit.IsAlive; 
     }
 
     public XElement GetPosition()

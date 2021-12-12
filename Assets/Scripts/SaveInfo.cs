@@ -12,6 +12,7 @@ public class SaveInfo : BaseSaveInfo
     private Saves _save;
 
     public Text uiText;
+    public Text uiDate;
 
     private void Awake()
     {

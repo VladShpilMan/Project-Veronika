@@ -53,6 +53,7 @@ public class Player : Unit
 
 
     #region MONO
+    [SerializeField] private CameraController _cameraController;
     private void Start()
     {
         GetReferences();
@@ -79,7 +80,7 @@ public class Player : Unit
         _sprite = GetComponentInChildren<SpriteRenderer>();
     }
     #endregion
-
+    
     private void Update()
     {
         _transformPos = transform;
@@ -93,6 +94,11 @@ public class Player : Unit
     private void FixedUpdate()
     {
         _physics.PhysicsComponentFixedUpdate(this, _input);
+    }
+
+    public Transform GetCameraPosition()
+    {
+        return _cameraController.transform;
     }
 
     public void TakeDamage(int damage, float repulsion)

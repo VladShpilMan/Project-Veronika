@@ -477,6 +477,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _rigidbody: {fileID: 0}
+  _cameraController: {fileID: 6638501057118019183}
 --- !u!114 &6638501057311748737
 MonoBehaviour:
   m_ObjectHideFlags: 0

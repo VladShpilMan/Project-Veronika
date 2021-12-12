@@ -20,7 +20,16 @@ public class TankAttack : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        character = GameObject.FindGameObjectWithTag("Character").transform;
+        StartCoroutine(StartFunction());
+    }
+
+    private IEnumerator StartFunction()
+    {
+        //Wait for 5 sec.
+        yield return new WaitForSeconds(0.1f);
+
+        //Turn My game object that is set to false(off) to True(on).
+        character = Player.TrasPos;
     }
 
     private void Update()
@@ -55,7 +64,7 @@ public class TankAttack : MonoBehaviour
     IEnumerator WaitAndDamage(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        character.GetComponent<Character>().TakeDamage(attackDamage, repulsion);
+        character.GetComponent<Player>().TakeDamage(attackDamage, repulsion);
     }
 
     private void OnDrawGizmosSelected()

@@ -10,6 +10,8 @@ public class Scrolling : MonoBehaviour
     public float paralaxSpeed;
 
     private Transform cameraTransform;
+    private Player _player;
+    private GameObject _camera;
     private Transform[] layers;
     private float viewZone = 10;
     private int rightIndex;
@@ -19,8 +21,8 @@ public class Scrolling : MonoBehaviour
 
     private void Start()
     {
-        cameraTransform = Camera.main.transform;
-        lastCameraX = cameraTransform.position.x;
+        _player = GetComponent<Player>();
+        StartCoroutine(StartFunction());
 
         layers = new Transform[transform.childCount];
 
@@ -33,32 +35,30 @@ public class Scrolling : MonoBehaviour
         rightIndex = layers.Length - 1;
     }
 
+    private IEnumerator StartFunction()
+    {
+        yield return new WaitForSeconds(1f);
+
+        cameraTransform = Camera.main.transform;
+        lastCameraX = cameraTransform.position.x;
+    }
+
     private void Update()
     {
-        //float deltaX = cameraTransform.position.x - lastCameraX;
-        //transform.position += Vector3.right * (deltaX * paralaxSpeed);
-        //lastCameraX = cameraTransform.position.x;
+        cameraTransform = Camera.main.transform;
+        float deltaX = cameraTransform.position.x - lastCameraX;
+        transform.position += Vector3.right * (deltaX * paralaxSpeed);
+        lastCameraX = cameraTransform.position.x;
 
-        //if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
-        //{
-        //    ScrollLeft();
-        //}
+        if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
+        {
+            ScrollLeft();
+        }
 
-        //if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
-        //{
-        //    ScrollRight();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    ScrollLeft();
-        //}
-
-
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    ScrollRight();
-        //}
+        if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
+        {
+            ScrollRight();
+        }
     }
 
     private void ScrollLeft()
